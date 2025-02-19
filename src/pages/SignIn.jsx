@@ -1,16 +1,32 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Lottie from 'lottie-react';
+import { toast } from 'react-hot-toast';
+import { useForm } from 'react-hook-form';
 import loginAnimation from '../assets/login-animation.json';
+import { useSigninMutation } from '../store/api/authApi';
 
 const SignIn = () => {
   const navigate = useNavigate();
-  const [credentials, setCredentials] = useState({ email: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
+  const [signin, { isLoading }] = useSigninMutation();
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    defaultValues: {
+      email: '',
+      password: ''
+    }
+  });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    navigate('/');
+  const onSubmit = async (data) => {
+    try {
+      const response = await signin(data).unwrap();
+      console.log('Login successful:', response);
+      toast.success('Successfully signed in!');
+      navigate('/');
+    } catch (error) {
+      console.error('Login failed:', error);
+      toast.error(error.data?.message || 'Invalid password or email');
+    }
   };
 
   return (
@@ -35,44 +51,60 @@ const SignIn = () => {
             <p className="text-white/70">Please sign in to continue</p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             <div className="space-y-2">
               <label className="text-sm font-medium text-white/90">Email</label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <div className="absolute  top-[15px] left-0 pl-3 flex items-center pointer-events-none">
                   <svg className="h-5 w-5 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
                   </svg>
                 </div>
                 <input
+                  {...register('email', { 
+                    required: 'Email is required',
+                    pattern: {
+                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                      message: 'Invalid email address'
+                    }
+                  })}
                   type="email"
                   placeholder="Enter your email"
-                  className="w-full pl-10 px-4 py-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/50 transition-all duration-200"
-                  value={credentials.email}
-                  onChange={(e) => setCredentials({ ...credentials, email: e.target.value })}
+                  className={`w-full pl-10 px-4 py-3 rounded-lg bg-white/20 border ${errors.email ? 'border-red-500' : 'border-white/30'} text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/50 transition-all duration-200`}
                 />
+                {errors.email && (
+                  <span className="text-red-400 text-sm mt-1 block">{errors.email.message}</span>
+                )}
               </div>
             </div>
 
             <div className="space-y-2">
               <label className="text-sm font-medium text-white/90">Password</label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <div className="absolute  top-[15px]  left-0 pl-3 flex items-center pointer-events-none">
                   <svg className="h-5 w-5 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                   </svg>
                 </div>
                 <input
+                  {...register('password', { 
+                    required: 'Password is required',
+                    minLength: {
+                      value: 6,
+                      message: 'Password must be at least 6 characters'
+                    }
+                  })}
                   type={showPassword ? "text" : "password"}
                   placeholder="Enter your password"
-                  className="w-full pl-10 px-4 py-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/50 transition-all duration-200"
-                  value={credentials.password}
-                  onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
+                  className={`w-full pl-10 px-4 py-3 rounded-lg bg-white/20 border ${errors.password ? 'border-red-500' : 'border-white/30'} text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/50 transition-all duration-200`}
                 />
+                {errors.password && (
+                  <span className="text-red-400 text-sm mt-1 block">{errors.password.message}</span>
+                )}
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-white/50 hover:text-white/70 transition-colors"
+                  className="absolute  top-[15px]  right-0 pr-3 flex items-center text-white/50 hover:text-white/70 transition-colors"
                 >
                   {showPassword ? (
                     <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -97,17 +129,20 @@ const SignIn = () => {
 
             <button
               type="submit"
-              className="w-full bg-white text-blue-600 py-3 px-4 rounded-lg font-semibold hover:bg-opacity-90 transition duration-200 flex items-center justify-center gap-2 group"
+              disabled={isLoading}
+              className="w-full bg-white text-blue-600 py-3 px-4 rounded-lg font-semibold hover:bg-opacity-90 transition duration-200 flex items-center justify-center gap-2 group disabled:opacity-70 disabled:cursor-not-allowed"
             >
-              <span>Sign In</span>
-              <svg 
-                className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" 
-                fill="none" 
-                stroke="currentColor" 
-                viewBox="0 0 24 24"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </svg>
+              <span>{isLoading ? 'Signing in...' : 'Sign In'}</span>
+              {!isLoading && (
+                <svg 
+                  className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+              )}
             </button>
           </form>
         </div>
