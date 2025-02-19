@@ -1,16 +1,18 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const NewReport = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('basic');
+  const {pathname} = useLocation()
+  // console.log(pathname)
   const [formData, setFormData] = useState({
     // Basic Information
     certificateNumber: '448226',
     approvalDate: '2023-02-26',
     manufacturer: 'Hyundai Motor Company',
-    vehicleType: 'Motor Vehicle',
-    model: 'Hyundai Creta SU2id 1.5L SUV FWD 5Doors',
+    // vehicleType: 'Motor Vehicle',
+    motorVehicle: 'Motor Vehicle',
     category: 'Multipurpose Vehicle',
     modelYear: '2024',
     productionCountry: 'INDONESIA',
@@ -102,9 +104,12 @@ const NewReport = () => {
         <div className="p-6">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-2xl font-semibold text-blue-900">New Conformity Certificate</h2>
+         {
+          pathname !=="/new-report" &&
             <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">
               CCR #{formData.certificateNumber}
             </span>
+         }
           </div>
 
           {/* Tabs */}
@@ -113,7 +118,7 @@ const NewReport = () => {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`px-4 py-2 rounded-lg whitespace-nowrap transition-colors ${
+                className={`px-4 py-2 rounded-lg whitespace-nowrap transition-colors cursor-pointer ${
                   activeTab === tab.id 
                     ? 'bg-blue-600 text-white' 
                     : 'text-blue-600 hover:bg-blue-50'
@@ -128,15 +133,15 @@ const NewReport = () => {
             {/* Basic Information Tab */}
             <div className={activeTab === 'basic' ? 'block' : 'hidden'}>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {renderInput('Certificate Number', 'certificateNumber')}
-                {renderInput('Approval Date', 'approvalDate', 'date')}
+                {renderInput('CCR Number', 'certificateNumber')}
+                {renderInput('Approved On', 'approvalDate', 'date')}
                 {renderInput('Manufacturer', 'manufacturer')}
-                {renderInput('Vehicle Type', 'vehicleType')}
-                {renderInput('Model', 'model')}
+               
+                {renderInput('Motor Vehicle', 'motorVehicle')}
                 {renderInput('Category', 'category')}
                 {renderInput('Model Year', 'modelYear')}
                 {renderInput('Country of Production', 'productionCountry')}
-                {renderInput('Production Date', 'productionDate', 'month')}
+                {renderInput('Produced in and after', 'productionDate', 'month')}
                 {renderInput('VIN', 'vin')}
               </div>
             </div>
@@ -148,8 +153,8 @@ const NewReport = () => {
                 {renderInput('Curb Weight', 'curb', 'number', 'kg')}
                 {renderInput('Front Axle Weight', 'frontAxleWeight', 'number', 'kg')}
                 {renderInput('Rear Axle Weight', 'rearAxleWeight', 'number', 'kg')}
-                {renderInput('Chassis Type', 'chassisType')}
-                {renderInput('Passenger Count', 'passengerCount', 'number')}
+                {renderInput('Type of chassis and body', 'chassisType')}
+                {renderInput('Number of passengers', 'passengerCount', 'number')}
               </div>
             </div>
 
@@ -159,7 +164,7 @@ const NewReport = () => {
                 {renderInput('Length', 'length', 'number', 'mm')}
                 {renderInput('Width', 'width', 'number', 'mm')}
                 {renderInput('Height', 'height', 'number', 'mm')}
-                {renderInput('Wheelbase', 'wheelbase', 'number', 'mm')}
+                {renderInput('(F1 - R1)', 'wheelbase', 'number', 'mm')}
                 {renderInput('Front Track', 'frontTrack', 'number', 'mm')}
                 {renderInput('Rear Track', 'rearTrack', 'number', 'mm')}
               </div>
@@ -184,9 +189,9 @@ const NewReport = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {renderInput('Service Brakes', 'serviceBrakes')}
                 {renderInput('Emergency Brakes', 'emergencyBrakes')}
-                {renderInput('Vehicle Class', 'vehicleClass')}
-                {renderInput('Fuel Economy', 'fuelEconomy', 'number', 'km/L')}
-                {renderInput('e-Call System', 'eCallSystem')}
+                {renderInput('Motor Vehicle Class', 'vehicleClass')}
+                {renderInput('FE (CAFE) Combined', 'fuelEconomy', 'number', 'km/L')}
+                {renderInput('e-Call (SoS) System', 'eCallSystem')}
               </div>
             </div>
 
