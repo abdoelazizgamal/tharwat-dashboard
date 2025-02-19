@@ -1,6 +1,24 @@
 import { Link } from 'react-router-dom';
-
+import { useEffect, useRef } from 'react';
 const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
+  const sidebarRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      // Only handle clicks outside on mobile screens
+      if (window.innerWidth < 768) {
+        if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+          setIsSidebarOpen(false);
+        }
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [setIsSidebarOpen]);
+
   const menuItems = [
     {
       title: 'Dashboard',
@@ -42,7 +60,10 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
   ];
 
   return (
-    <aside className={`fixed top-0 left-0 z-[60] w-72 h-screen transition-transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+    <aside 
+      ref={sidebarRef}
+      className={`fixed top-0 left-0 z-[60] w-72 h-screen transition-transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}
+    >
       <div className="h-full px-3 py-4 overflow-y-auto bg-white/60 backdrop-blur-xl border-r border-white/20">
         <div className="flex items-center justify-between px-4 py-6">
           <div className="flex items-center gap-3">
@@ -77,8 +98,6 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
             </Link>
           ))}
         </div>
-
-        
       </div>
     </aside>
   );
