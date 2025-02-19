@@ -1,6 +1,23 @@
+import { useEffect, useRef } from 'react';
+
 const ProfileMenu = ({ isProfileOpen, setIsProfileOpen }) => {
+  const menuRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setIsProfileOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [setIsProfileOpen]);
+
   return (
-    <div className="relative flex items-center gap-2">
+    <div ref={menuRef} className="relative flex items-center gap-2">
       <button
         onClick={() => setIsProfileOpen(!isProfileOpen)}
         className="flex items-center gap-2 p-2 hover:bg-blue-50/50 rounded-lg transition-all duration-200"
