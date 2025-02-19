@@ -1,15 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 import ReportsTable from '../components/ReportsTable';
+import { useGetReportsQuery } from '../store/api/reportsApi';
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  
-  const reports = [
-    { id: 1, title: 'Monthly Sales Report', date: '2024-01-15', status: 'Published' },
-    { id: 2, title: 'Customer Feedback Analysis', date: '2024-01-14', status: 'Draft' },
-    { id: 3, title: 'Inventory Status', date: '2024-01-13', status: 'Published' },
-    { id: 4, title: 'Financial Overview', date: '2024-01-12', status: 'Under Review' },
-  ];
+  const { data, isLoading, error } = useGetReportsQuery();
 
   return (
     <main className="p-6 md:p-10">
@@ -24,11 +19,27 @@ const Dashboard = () => {
               New Report
             </button>
           </div>
-          <ReportsTable reports={reports} />
+          
+          {isLoading ? (
+            <div className="flex justify-center items-center py-8">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+            </div>
+          ) : error ? (
+            <div className="text-center py-8 text-red-600">
+              Error loading reports. Please try again later.
+            </div>
+          ) : !data?.data?.length ? (
+            <div className="text-center py-8 text-gray-600">
+              No reports found. Create your first report by clicking the "New Report" button.
+            </div>
+          ) : (
+            <ReportsTable reports={data.data} />
+          )}
         </div>
       </div>
     </main>
   );
+
 };
 
 export default Dashboard;

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { useCreateReportMutation } from '../store/api/reportsApi';
 
 const NewReport = () => {
   const navigate = useNavigate();
@@ -52,9 +53,15 @@ const NewReport = () => {
     { id: 'engine', label: 'Engine' },
     { id: 'other', label: 'Other Details' }
   ];
-  const onSubmit = (data) => {
-    console.log(data);
-    navigate('/');
+  const [createReport] = useCreateReportMutation();
+
+  const onSubmit = async (data) => {
+    try {
+      await createReport(data).unwrap();
+      navigate('/');
+    } catch (error) {
+      console.error('Failed to create report:', error);
+    }
   };
   const renderInput = (label, name, type = "text", unit = "",) => {
     const requiredFields = [

@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { authApi } from '../api/authApi';
 
 const initialState = {
-  user: null,
+  user: JSON.parse(localStorage.getItem('user')) || null,
   token: localStorage.getItem('token') || null,
   isAuthenticated: !!localStorage.getItem('token')
 };
@@ -16,6 +16,7 @@ const authSlice = createSlice({
       state.token = null;
       state.isAuthenticated = false;
       localStorage.removeItem('token');
+      localStorage.removeItem('user');
     }
   },
   extraReducers: (builder) => {
@@ -26,6 +27,7 @@ const authSlice = createSlice({
         state.token = payload.data.accessToken;
         state.isAuthenticated = true;
         localStorage.setItem('token', payload.data.accessToken);
+        localStorage.setItem('user', JSON.stringify(payload.data));
       }
     );
   }
