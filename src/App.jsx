@@ -1,30 +1,37 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider, Navigate, redirect } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import SignIn from './pages/SignIn';
 import Dashboard from './pages/Dashboard';
 import NewReport from './pages/NewReport';
-
-import { Navigate } from 'react-router-dom';
 import Layout from './Layout/Layout';
+import ProtectedRoute from './components/ProtectedRoute';
 
 const router = createBrowserRouter([
   {
     path: "/signin",
-    element: <SignIn />
-  },
-{
-  path: "/",
-  element: <Layout />,
-  children: [
-    {
-      index: true,
-      element: <Dashboard />
+    element: <SignIn />,
+    loader: () => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        return redirect('/');
+      }
+      return null;
     },
-    {
-      path: "new-report",
-      element: <NewReport />
-    }
-  ]
-},
+  },
+  {
+    path: "/",
+    element: <ProtectedRoute><Layout /></ProtectedRoute>,
+    children: [
+      {
+        index: true,
+        element: <Dashboard />
+      },
+      {
+        path: "new-report",
+        element: <NewReport />
+      }
+    ]
+  },
   {
     path: "*",
     element: <Navigate to="/" replace />
