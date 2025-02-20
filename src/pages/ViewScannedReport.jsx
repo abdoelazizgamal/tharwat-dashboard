@@ -52,7 +52,7 @@ const ViewScannedReport = () => {
           </h2>
           {/* Vehicle Information Table */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 ">
-            <div className="bg-white rounded-lg shadow-sm p-6 md:col-span-2 shadow">
+            <div className="bg-white rounded-lg  p-6 md:col-span-2 shadow">
               <table className="w-full border-collapse">
                 <tbody>
                   <tr className="border-b border-white">
