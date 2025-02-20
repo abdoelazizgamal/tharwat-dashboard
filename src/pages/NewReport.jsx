@@ -8,7 +8,7 @@ const NewReport = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('basic');
   const {pathname} = useLocation();
-  const { register, handleSubmit, formState: { errors } } = useForm({
+  const { register, handleSubmit, formState: { errors }, trigger } = useForm({
     defaultValues: {
       certificateNumber: '',
       approvalDate: '',
@@ -48,6 +48,25 @@ const NewReport = () => {
     }, 
     // "mode" : "onChange"
   });
+
+  // Function to check if a tab has errors
+  const hasTabErrors = (tabId) => {
+    const tabFields = {
+      basic: ['certificateNumber', 'approvalDate', 'manufacturer', 'motorVehicle', 'category', 'modelYear', 'productionCountry', 'productionDate', 'vin'],
+      technical: ['maxVehicleWeight', 'curb', 'frontAxleWeight', 'rearAxleWeight', 'chassisType', 'passengerCount'],
+      dimensions: ['length', 'width', 'height', 'wheelbase', 'frontTrack', 'rearTrack'],
+      engine: ['engineType', 'cylinders', 'displacement', 'airIntake', 'netEnginePower', 'engineRPM', 'pollutantLimit', 'transmission'],
+      other: ['serviceBrakes', 'emergencyBrakes', 'vehicleClass', 'fuelEconomy', 'eCallSystem', 'complianceInfo']
+    };
+
+    return tabFields[tabId]?.some(field => errors[field]);
+  };
+
+  // Function to get the first tab with errors
+  const getFirstErrorTab = () => {
+    const tabOrder = ['basic', 'technical', 'dimensions', 'engine', 'other'];
+    return tabOrder.find(tab => hasTabErrors(tab));
+  };
 
   const onSubmit = async (formData) => {
     try {
@@ -117,6 +136,14 @@ const NewReport = () => {
     }
   };
 
+  const onError = (errors) => {
+    const firstErrorTab = getFirstErrorTab();
+    if (firstErrorTab && firstErrorTab !== activeTab) {
+      setActiveTab(firstErrorTab);
+      toast.error('Please fix the validation errors');
+    }
+  };
+
   const renderInput = (label, name, type = "text", unit = "", isTextArea = false) => {
     const requiredFields = [
       'certificateNumber', 'approvalDate', 'manufacturer', 'motorVehicle',
@@ -179,24 +206,27 @@ const NewReport = () => {
             )}
           </div>
 
-          <div className="flex space-x-2 mb-6 overflow-x-auto pb-2">
+          <div className="flex space-x-2 mb-6 overflow-x-auto py-2">
             {tabs.map(tab => (
               <button
                 key={tab.id}
                 type="button"
                 onClick={() => setActiveTab(tab.id)}
-                className={`px-4 py-2 rounded-lg whitespace-nowrap transition-colors cursor-pointer ${
+                className={`px-4 py-2 rounded-lg whitespace-nowrap transition-colors cursor-pointer relative ${hasTabErrors(tab.id) ? 'text-red-600' : ''} ${
                   activeTab === tab.id 
-                    ? 'bg-blue-600 text-white' 
-                    : 'text-blue-600 hover:bg-blue-50'
+                    ? hasTabErrors(tab.id) ? 'bg-red-600 text-white' : 'bg-blue-600 text-white'
+                    : hasTabErrors(tab.id) ? 'text-red-600 hover:bg-red-50' : 'text-blue-600 hover:bg-blue-50'
                 }`}
               >
                 {tab.label}
+                {hasTabErrors(tab.id) && (
+                  <span className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                )}
               </button>
             ))}
           </div>
 
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+          <form onSubmit={handleSubmit(onSubmit, onError)} className="space-y-8">
             <div className={activeTab === 'basic' ? 'block' : 'hidden'}>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {renderInput('CCR Number', 'certificateNumber', 'text', '', )}
