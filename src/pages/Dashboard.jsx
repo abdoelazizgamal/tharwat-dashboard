@@ -16,7 +16,7 @@ const Dashboard = () => {
               onClick={() => navigate('/new-report')}
               className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
             >
-              New Report
+              New Certificate
             </button>
           </div>
 
@@ -24,7 +24,7 @@ const Dashboard = () => {
             <div className=" flex items-center justify-center p-6">
               <div className="relative flex flex-col items-center justify-center">
                 <div className="absolute w-24 h-24 rounded-full bg-blue-50 animate-pulse"></div>
-                <img src="/logo.png" alt="Motabiq" className="w-16 h-16 relative z-10 top-10" />
+                <img src="/logo.png" alt="Mutabiq" className="w-16 h-16 relative z-10 top-10" />
                 <div className="absolute w-24 h-24 border-4 border-blue-600 rounded-full border-t-transparent animate-spin"></div>
                 <p className="mt-14 text-blue-900 font-medium animate-pulse">Loading...</p>
               </div>
@@ -35,7 +35,7 @@ const Dashboard = () => {
             </div>
           ) : !data?.data?.length ? (
             <div className="text-center py-8 text-gray-600">
-              No reports found. Create your first report by clicking the "New Report" button.
+              No reports found. Create your first report by clicking the "New Certificate" button.
             </div>
           ) : (
             <ReportsTable reports={data.data} />
