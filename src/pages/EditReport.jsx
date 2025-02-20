@@ -56,6 +56,29 @@ const EditReport = () => {
       });
     }
   }, [reportData, reset]);
+  const hasTabErrors = (tabId) => {
+    const tabFields = {
+      basic: ['certificateNumber', 'approvalDate', 'manufacturer', 'motorVehicle', 'category', 'modelYear', 'productionCountry', 'productionDate', 'vin'],
+      technical: ['maxVehicleWeight', 'curb', 'frontAxleWeight', 'rearAxleWeight', 'chassisType', 'passengerCount'],
+      dimensions: ['length', 'width', 'height', 'wheelbase', 'frontTrack', 'rearTrack'],
+      engine: ['engineType', 'cylinders', 'displacement', 'airIntake', 'netEnginePower', 'engineRPM', 'pollutantLimit', 'transmission'],
+      other: ['serviceBrakes', 'emergencyBrakes', 'vehicleClass', 'fuelEconomy', 'eCallSystem', 'complianceInfo']
+    };
+    return tabFields[tabId]?.some(field => errors[field]);
+  };
+
+  const getFirstErrorTab = () => {
+    const tabOrder = ['basic', 'technical', 'dimensions', 'engine', 'other'];
+    return tabOrder.find(tab => hasTabErrors(tab));
+  };
+
+  const onError = (errors) => {
+    const firstErrorTab = getFirstErrorTab();
+    if (firstErrorTab && firstErrorTab !== activeTab) {
+      setActiveTab(firstErrorTab);
+      toast.error('Please fix the validation errors');
+    }
+  };
 
   const onSubmit = async (formData) => {
     try {
@@ -148,7 +171,7 @@ const EditReport = () => {
               type={type === "number" ? "number" : type}
               step={type === "number" ? "0.01" : ""}
               min={type === "number" ? "0" : ""}
-
+      
               {...register(name, { required: isRequired ? `${label} is required` : false })}
               className={`shadow w-full px-4 py-2 rounded-lg bg-white/50 border ${errors[name] ? 'border-red-500' : 'border-white/30'} focus:outline-none focus:ring-2 focus:ring-blue-500`}
             />
@@ -203,12 +226,16 @@ const EditReport = () => {
                 key={tab.id}
                 type="button"
                 onClick={() => setActiveTab(tab.id)}
-                className={`px-4 py-2 rounded-lg whitespace-nowrap transition-colors cursor-pointer ${activeTab === tab.id
-                    ? 'bg-blue-600 text-white'
-                    : 'text-blue-600 hover:bg-blue-50'
-                  }`}
+                className={`px-4 py-2 rounded-lg whitespace-nowrap transition-colors cursor-pointer relative ${hasTabErrors(tab.id) ? 'text-red-600' : ''} ${
+                  activeTab === tab.id 
+                    ? hasTabErrors(tab.id) ? 'bg-red-600 text-white' : 'bg-blue-600 text-white'
+                    : hasTabErrors(tab.id) ? 'text-red-600 hover:bg-red-50' : 'text-blue-600 hover:bg-blue-50'
+                }`}
               >
                 {tab.label}
+                {hasTabErrors(tab.id) && (
+                  <span className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                )}
               </button>
             ))}
           </div>
