@@ -82,7 +82,176 @@ const ViewScannedReport = () => {
                   {report.motorVehicle}
                 </p>
               </div>
-              {/* add here */}
+              <div className="mt-4">
+                <table className="w-full border-collapse">
+                  <tbody>
+                    <tr className="border-b border-white">
+                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/4">
+                        <span className="text-sm font-normal text-[#58595b]">Category</span>
+                      </td>
+                      <td className="py-2 px-4 bg-[#f9f9f9]">
+                        <span className="text-[#58595b] font-bold text-sm">{report.category}</span>
+                      </td>
+                    </tr>
+                    <tr className="border-b border-white">
+                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/4">
+                        <span className="text-sm font-normal text-[#58595b]">Model Year</span>
+                      </td>
+                      <td className="py-2 px-4 bg-[#f9f9f9]">
+                        <span className="text-[#58595b] font-bold text-sm">{report.production}</span>
+                      </td>
+                    </tr>
+                    <tr className="border-b border-white">
+                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/4">
+                        <span className="text-sm font-normal text-[#58595b]">Country of Production</span>
+                      </td>
+                      <td className="py-2 px-4 bg-[#f9f9f9]">
+                        <span className="text-[#58595b] font-bold text-sm">INDONESIA</span>
+                      </td>
+                    </tr>
+                    <tr className="border-b border-white">
+                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/4">
+                        <span className="text-sm font-normal text-[#58595b]">Produced in and after</span>
+                      </td>
+                      <td className="py-2 px-4 bg-[#f9f9f9]">
+                        <span className="text-[#58595b] font-bold text-sm">Month 3 Year 2023</span>
+                      </td>
+                    </tr>
+                    <tr className="border-b border-white">
+                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/4">
+                        <span className="text-sm font-normal text-[#58595b]">VIN</span>
+                      </td>
+                      <td className="py-2 px-4 bg-[#f9f9f9]">
+                        <span className="text-[#58595b] font-bold text-sm">{report.vin}</span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Technical Specifications */}
+              <div className="mt-4">
+                <h3 className="text-lg font-medium text-[#58595b] mb-4 ">Technical Specifications</h3>
+                <table className="w-full border-collapse">
+                  <tbody>
+                    <tr className=" border-b-[4px] border-white bg-[#f8f9fa]  ">
+                      <td colSpan={2} className="py-2 px-4 font-bold text-sm text-[#58595b]" >
+                        Weights
+                      </td>
+                    </tr>
+                    <tr className="border-b border-white">
+                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/4">
+                        <span className="text-sm font-normal text-[#58595b]">Max Vehicle Weight</span>
+                      </td>
+                      <td className="py-2 px-4 bg-[#f9f9f9]">
+                        <span className="text-[#58595b] font-bold text-sm">{report.specifications?.weights?.maxVehicleWeight} kg</span>
+                      </td>
+                    </tr>
+                    <tr className="border-b border-white">
+                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/4">
+                        <span className="text-sm font-normal text-[#58595b]">Curb</span>
+                      </td>
+                      <td className="py-2 px-4 bg-[#f9f9f9]">
+                        <span className="text-[#58595b] font-bold text-sm">{report.specifications?.weights?.curb} kg</span>
+                      </td>
+                    </tr>
+                    <tr className=" border-b-[4px] border-white bg-[#f8f9fa]  ">
+                      <td colSpan={2} className="py-2 px-4 font-bold text-sm text-[#58595b]" >
+                        Maximum Axle Weight
+                      </td>
+                    </tr>
+                    <tr className="border-b border-white">
+                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/4">
+                        <span className="text-sm font-normal text-[#58595b]">Front</span>
+                      </td>
+                      <td className="py-2 px-4 bg-[#f9f9f9]">
+                        <span className="text-[#58595b] font-bold text-sm">{report.specifications?.maxAxleWeight?.front} kg</span>
+                      </td>
+                    </tr>
+                    <tr className="border-b border-white">
+                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/4">
+                        <span className="text-sm font-normal text-[#58595b]">Rear </span>
+                      </td>
+                      <td className="py-2 px-4 bg-[#f9f9f9]">
+                        <span className="text-[#58595b] font-bold text-sm">{report.specifications?.maxAxleWeight?.rear} kg</span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Dimensions */}
+              <div className="mt-4">
+
+                <table className="w-full border-collapse">
+                  <tbody>
+                    <tr className=" border-b-[4px] border-white bg-[#f8f9fa]  ">
+                      <td colSpan={2} className="py-2 px-4 font-bold text-sm text-[#58595b]" >
+                        Dimensions
+                      </td>
+                    </tr>
+                    <tr className="border-b border-white">
+                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/4">
+                        <span className="text-sm font-normal text-[#58595b]">Length</span>
+                      </td>
+                      <td className="py-2 px-4 bg-[#f9f9f9]">
+                        <span className="text-[#58595b] font-bold text-sm">{report.specifications?.dimensions?.length} mm</span>
+                      </td>
+                    </tr>
+                    <tr className="border-b border-white">
+                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/4">
+                        <span className="text-sm font-normal text-[#58595b]">Width</span>
+                      </td>
+                      <td className="py-2 px-4 bg-[#f9f9f9]">
+                        <span className="text-[#58595b] font-bold text-sm">{report.specifications?.dimensions?.width} mm</span>
+                      </td>
+                    </tr>
+                    <tr className="border-b border-white">
+                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/4">
+                        <span className="text-sm font-normal text-[#58595b]">Height</span>
+                      </td>
+                      <td className="py-2 px-4 bg-[#f9f9f9]">
+                        <span className="text-[#58595b] font-bold text-sm">{report.specifications?.dimensions?.height} mm</span>
+                      </td>
+                    </tr>
+                    <tr className=" border-b-[4px] border-white bg-[#f8f9fa]  ">
+                      <td colSpan={2} className="py-2 px-4 font-bold text-sm text-[#58595b]" >
+                      Wheelbase
+                      </td>
+                    </tr>
+                    <tr className="border-b border-white">
+                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/4">
+                        <span className="text-sm font-normal text-[#58595b]">(F1-R1)	</span>
+                      </td>
+                      <td className="py-2 px-4 bg-[#f9f9f9]">
+                        <span className="text-[#58595b] font-bold text-sm">{report?.specifications?.wheelBase?.f1r1} mm</span>
+                      </td>
+                    </tr>
+                    <tr className=" border-b-[4px] border-white bg-[#f8f9fa]  ">
+                      <td colSpan={2} className="py-2 px-4 font-bold text-sm text-[#58595b]" >
+                      Track
+                      </td>
+                    </tr>
+                    <tr className="border-b border-white">
+                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/4">
+                        <span className="text-sm font-normal text-[#58595b]">Front </span>
+                      </td>
+                      <td className="py-2 px-4 bg-[#f9f9f9]">
+                        <span className="text-[#58595b] font-bold text-sm">{report.specifications?.track?.front} mm</span>
+                      </td>
+                    </tr>
+                    <tr className="border-b border-white">
+                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/4">
+                        <span className="text-sm font-normal text-[#58595b]">Rear </span>
+                      </td>
+                      <td className="py-2 px-4 bg-[#f9f9f9]">
+                        <span className="text-[#58595b] font-bold text-sm">{report.specifications?.track?.rear} mm</span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
             </div>
             <div className="md:col-span-1 space-y-4">
               <div className="bg-white rounded-lg p-6 flex flex-col items-center text-center">
