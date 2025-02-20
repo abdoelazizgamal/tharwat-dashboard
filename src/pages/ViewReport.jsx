@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import {  useGetSingleReportQuery } from '../store/api/reportsApi';
 
 const ViewReport = () => {
@@ -226,7 +226,18 @@ const ViewReport = () => {
               <h3 className="text-lg font-medium text-blue-900 mb-4">Certificate QR Code</h3>
               <img src={report.qrCode} alt="Certificate QR Code" className="w-64 h-64 object-contain" />
               <p className="mt-4 text-sm text-blue-800/70 text-center">Scan to verify certificate authenticity</p>
-              <div className="flex gap-4 mt-6">
+              <div className="flex gap-4 mt-6 flex-wrap justify-center">
+                <Link
+                  to={`/${report?._id}`}
+                  className="flex items-center gap-2 px-4 py-2 bg-white text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-50 transition-colors"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                  <span>View External</span>
+                </Link>
                 <a
                   href={report.qrCode}
                   download="certificate-qr-code.png"

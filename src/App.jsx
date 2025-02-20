@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider, Navigate, redirect } from 'react-router-dom';
-
+import { useEffect } from 'react';
 import SignIn from './pages/SignIn';
 import Dashboard from './pages/Dashboard';
 import NewReport from './pages/NewReport';
@@ -9,10 +9,23 @@ import ProtectedRoute from './components/ProtectedRoute';
 import ViewScannedReport from './pages/ViewScannedReport';
 import EditReport from './pages/EditReport';
 
+// ScrollToTop component to handle scroll restoration
+const ScrollToTop = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+  return null;
+};
+
 const router = createBrowserRouter([
   {
     path: "/signin",
-    element: <SignIn />,
+    element: (
+      <>
+        <ScrollToTop />
+        <SignIn />
+      </>
+    ),
     loader: () => {
       const token = localStorage.getItem('token');
       if (token) {
@@ -23,7 +36,12 @@ const router = createBrowserRouter([
   },
   {
     path: "/",
-    element: <ProtectedRoute><Layout /></ProtectedRoute>,
+    element: (
+      <ProtectedRoute>
+        <ScrollToTop />
+        <Layout />
+      </ProtectedRoute>
+    ),
     children: [
       {
         index: true,
@@ -45,7 +63,12 @@ const router = createBrowserRouter([
   },
   {
     path: "/:id",
-    element: <ViewScannedReport />
+    element: (
+      <>
+        <ScrollToTop />
+        <ViewScannedReport />
+      </>
+    )
   },
   {
     path: "*",
