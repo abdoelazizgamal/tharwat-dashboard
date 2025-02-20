@@ -56,7 +56,7 @@ const ViewScannedReport = () => {
               <table className="w-full border-collapse">
                 <tbody>
                   <tr className="border-b border-white">
-                    <td className="py-2 px-4 bg-[#f0f0f0] w-1/4">
+                    <td className="py-2 px-4 bg-[#f0f0f0] w-1/2 md:w-1/4">
                       <span className="text-sm font-normal text-[#262626]">CCR Number</span>
                     </td>
                     <td className="py-2 px-4 bg-[#f9f9f9] ">
@@ -64,7 +64,7 @@ const ViewScannedReport = () => {
                     </td>
                   </tr>
                   <tr className="border-b border-white">
-                    <td className="py-2 px-4 bg-[#f0f0f0] w-1/4">
+                    <td className="py-2 px-4 bg-[#f0f0f0] w-1/2 md:w-1/4">
                       <span className="text-sm font-normal text-[#262626]">Approved On</span>
                     </td>
                     <td className="py-2 px-4  bg-[#f9f9f9]">
@@ -74,7 +74,7 @@ const ViewScannedReport = () => {
                     </td>
                   </tr>
                   <tr className="border-b border-white">
-                    <td className="py-2 px-4 bg-[#f0f0f0] w-1/4">
+                    <td className="py-2 px-4 bg-[#f0f0f0] w-1/2 md:w-1/4">
                       <span className="text-sm font-normal text-[#262626]">Manufacturer</span>
                     </td>
                     <td className="py-2 px-4 bg-[#f9f9f9]">
@@ -95,7 +95,7 @@ const ViewScannedReport = () => {
                 <table className="w-full border-collapse">
                   <tbody>
                     <tr className="border-b border-white">
-                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/4">
+                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/2 md:w-1/4">
                         <span className="text-sm font-normal text-[#262626]">Category</span>
                       </td>
                       <td className="py-2 px-4 bg-[#f9f9f9]">
@@ -103,7 +103,7 @@ const ViewScannedReport = () => {
                       </td>
                     </tr>
                     <tr className="border-b border-white">
-                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/4">
+                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/2 md:w-1/4">
                         <span className="text-sm font-normal text-[#262626]">Model Year</span>
                       </td>
                       <td className="py-2 px-4 bg-[#f9f9f9]">
@@ -111,7 +111,7 @@ const ViewScannedReport = () => {
                       </td>
                     </tr>
                     <tr className="border-b border-white">
-                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/4">
+                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/2 md:w-1/4">
                         <span className="text-sm font-normal text-[#262626]">Country of Production</span>
                       </td>
                       <td className="py-2 px-4 bg-[#f9f9f9]">
@@ -119,7 +119,7 @@ const ViewScannedReport = () => {
                       </td>
                     </tr>
                     <tr className="border-b border-white">
-                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/4">
+                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/2 md:w-1/4">
                         <span className="text-sm font-normal text-[#262626]">Produced in and after</span>
                       </td>
                       <td className="py-2 px-4 bg-[#f9f9f9]">
@@ -129,7 +129,7 @@ const ViewScannedReport = () => {
                       </td>
                     </tr>
                     <tr className="border-b border-white">
-                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/4">
+                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/2 md:w-1/4">
                         <span className="text-sm font-normal text-[#262626]">VIN</span>
                       </td>
                       <td className="py-2 px-4 bg-[#f9f9f9]">
@@ -151,7 +151,7 @@ const ViewScannedReport = () => {
                       </td>
                     </tr>
                     <tr className="border-b border-white">
-                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/4">
+                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/2 md:w-1/4">
                         <span className="text-sm font-normal text-[#262626]">Max Vehicle Weight</span>
                       </td>
                       <td className="py-2 px-4 bg-[#f9f9f9]">
@@ -159,7 +159,7 @@ const ViewScannedReport = () => {
                       </td>
                     </tr>
                     <tr className="border-b border-white">
-                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/4">
+                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/2 md:w-1/4">
                         <span className="text-sm font-normal text-[#262626]">Curb</span>
                       </td>
                       <td className="py-2 px-4 bg-[#f9f9f9]">
@@ -172,7 +172,7 @@ const ViewScannedReport = () => {
                       </td>
                     </tr>
                     <tr className="border-b border-white">
-                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/4">
+                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/2 md:w-1/4">
                         <span className="text-sm font-normal text-[#262626]">Front</span>
                       </td>
                       <td className="py-2 px-4 bg-[#f9f9f9]">
@@ -180,7 +180,7 @@ const ViewScannedReport = () => {
                       </td>
                     </tr>
                     <tr className="border-b border-white">
-                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/4">
+                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/2 md:w-1/4">
                         <span className="text-sm font-normal text-[#262626]">Rear </span>
                       </td>
                       <td className="py-2 px-4 bg-[#f9f9f9]">
@@ -202,7 +202,7 @@ const ViewScannedReport = () => {
                       </td>
                     </tr>
                     <tr className="border-b border-white">
-                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/4">
+                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/2 md:w-1/4">
                         <span className="text-sm font-normal text-[#262626]">Length</span>
                       </td>
                       <td className="py-2 px-4 bg-[#f9f9f9]">
@@ -212,7 +212,7 @@ const ViewScannedReport = () => {
                       </td>
                     </tr>
                     <tr className="border-b border-white">
-                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/4">
+                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/2 md:w-1/4">
                         <span className="text-sm font-normal text-[#262626]">Width</span>
                       </td>
                       <td className="py-2 px-4 bg-[#f9f9f9]">
@@ -220,7 +220,7 @@ const ViewScannedReport = () => {
                       </td>
                     </tr>
                     <tr className="border-b border-white">
-                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/4">
+                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/2 md:w-1/4">
                         <span className="text-sm font-normal text-[#262626]">Height</span>
                       </td>
                       <td className="py-2 px-4 bg-[#f9f9f9]">
@@ -233,7 +233,7 @@ const ViewScannedReport = () => {
                       </td>
                     </tr>
                     <tr className="border-b border-white">
-                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/4">
+                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/2 md:w-1/4">
                         <span className="text-sm font-normal text-[#262626]">(F1-R1)	</span>
                       </td>
                       <td className="py-2 px-4 bg-[#f9f9f9]">
@@ -246,7 +246,7 @@ const ViewScannedReport = () => {
                       </td>
                     </tr>
                     <tr className="border-b border-white">
-                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/4">
+                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/2 md:w-1/4">
                         <span className="text-sm font-normal text-[#262626]">Front </span>
                       </td>
                       <td className="py-2 px-4 bg-[#f9f9f9]">
@@ -254,7 +254,7 @@ const ViewScannedReport = () => {
                       </td>
                     </tr>
                     <tr className="border-b border-white">
-                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/4">
+                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/2 md:w-1/4">
                         <span className="text-sm font-normal text-[#262626]">Rear </span>
                       </td>
                       <td className="py-2 px-4 bg-[#f9f9f9]">
@@ -274,7 +274,7 @@ const ViewScannedReport = () => {
                       </td>
                     </tr>
                     <tr className="border-b border-white">
-                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/4">
+                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/2 md:w-1/4">
                         <span className="text-sm font-normal text-[#262626]">Type of chassis and body</span>
                       </td>
                       <td className="py-2 px-4 bg-[#f9f9f9]">
@@ -282,7 +282,7 @@ const ViewScannedReport = () => {
                       </td>
                     </tr>
                     <tr className="border-b border-white">
-                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/4">
+                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/2 md:w-1/4">
                         <span className="text-sm font-normal text-[#262626]">Number of Passengers</span>
                       </td>
                       <td className="py-2 px-4 bg-[#f9f9f9]">
@@ -303,7 +303,7 @@ const ViewScannedReport = () => {
                       </td>
                     </tr>
                     <tr className="border-b border-white">
-                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/4">
+                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/2 md:w-1/4">
                         <span className="text-sm font-normal text-[#262626]">Engine Type</span>
                       </td>
                       <td className="py-2 px-4 bg-[#f9f9f9]">
@@ -311,7 +311,7 @@ const ViewScannedReport = () => {
                       </td>
                     </tr>
                     <tr className="border-b border-white">
-                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/4">
+                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/2 md:w-1/4">
                         <span className="text-sm font-normal text-[#262626]">Cylinders</span>
                       </td>
                       <td className="py-2 px-4 bg-[#f9f9f9]">
@@ -319,7 +319,7 @@ const ViewScannedReport = () => {
                       </td>
                     </tr>
                     <tr className="border-b border-white">
-                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/4">
+                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/2 md:w-1/4">
                         <span className="text-sm font-normal text-[#262626]">Displacement</span>
                       </td>
                       <td className="py-2 px-4 bg-[#f9f9f9]">
@@ -329,7 +329,7 @@ const ViewScannedReport = () => {
                       </td>
                     </tr>
                     <tr className="border-b border-white">
-                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/4">
+                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/2 md:w-1/4">
                         <span className="text-sm font-normal text-[#262626]">Air Intake</span>
                       </td>
                       <td className="py-2 px-4 bg-[#f9f9f9]">
@@ -337,7 +337,7 @@ const ViewScannedReport = () => {
                       </td>
                     </tr>
                     <tr className="border-b border-white">
-                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/4">
+                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/2 md:w-1/4">
                         <span className="text-sm font-normal text-[#262626]">Net Engine Power</span>
                       </td>
                       <td className="py-2 px-4 bg-[#f9f9f9]">
@@ -349,7 +349,7 @@ const ViewScannedReport = () => {
                       </td>
                     </tr>
                     <tr className="border-b border-white">
-                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/4">
+                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/2 md:w-1/4">
                         <span className="text-sm font-normal text-[#262626]">Pollutant Limit</span>
                       </td>
                       <td className="py-2 px-4 bg-[#f9f9f9]">
@@ -357,7 +357,7 @@ const ViewScannedReport = () => {
                       </td>
                     </tr>
                     <tr className="border-y-[15px] border-white">
-                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/4">
+                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/2 md:w-1/4">
                         <span className="text-sm font-normal text-[#262626]">Transmission</span>
                       </td>
                       <td className="py-2 px-4 bg-[#f9f9f9]">
@@ -365,7 +365,7 @@ const ViewScannedReport = () => {
                       </td>
                     </tr>
                     <tr className="border-y-[15px] border-white ">
-                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/4">
+                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/2 md:w-1/4">
                         <span className="text-sm font-normal text-[#262626]">e Call (SOS) System	</span>
                       </td>
                       <td className="py-2 px-4 bg-[#f9f9f9]">
@@ -386,7 +386,7 @@ const ViewScannedReport = () => {
                       </td>
                     </tr>
                     <tr className="border-b border-white">
-                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/4">
+                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/2 md:w-1/4">
                         <span className="text-sm font-normal text-[#262626]">Service Brakes</span>
                       </td>
                       <td className="py-2 px-4 bg-[#f9f9f9]">
@@ -394,7 +394,7 @@ const ViewScannedReport = () => {
                       </td>
                     </tr>
                     <tr className="border-b border-white">
-                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/4">
+                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/2 md:w-1/4">
                         <span className="text-sm font-normal text-[#262626]">Emergency Brake</span>
                       </td>
                       <td className="py-2 px-4 bg-[#f9f9f9]">
@@ -415,7 +415,7 @@ const ViewScannedReport = () => {
                       </td>
                     </tr>
                     <tr className="border-b border-white">
-                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/4">
+                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/2 md:w-1/4">
                         <span className="text-sm font-normal text-[#262626]">Motor Vehicle Class</span>
                       </td>
                       <td className="py-2 px-4 bg-[#f9f9f9]">
@@ -423,7 +423,7 @@ const ViewScannedReport = () => {
                       </td>
                     </tr>
                     <tr className="border-b border-white">
-                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/4">
+                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/2 md:w-1/4">
                         <span className="text-sm font-normal text-[#262626]">FE (CAFE) Combined</span>
                       </td>
                       <td className="py-2 px-4 bg-[#f9f9f9]">
