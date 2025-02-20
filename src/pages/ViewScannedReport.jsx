@@ -1,6 +1,6 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
-import { useGetReportsQuery } from '../store/api/reportsApi';
+import React from "react";
+import { useParams } from "react-router-dom";
+import { useGetReportsQuery } from "../store/api/reportsApi";
 
 const ViewScannedReport = () => {
   const { id } = useParams();
@@ -8,76 +8,98 @@ const ViewScannedReport = () => {
   const report = data?.data?.find((report) => report._id === id);
 
   if (isLoading) return <div className="p-6 text-center">Loading...</div>;
-  if (error) return <div className="p-6 text-red-600">Error loading report</div>;
-  if (!report) return <div className="p-6 text-yellow-600">Report not found</div>;
+  if (error)
+    return <div className="p-6 text-red-600">Error loading report</div>;
+  if (!report)
+    return <div className="p-6 text-yellow-600">Report not found</div>;
 
   return (
     <div className="bg-[#dedfe0] min-h-screen pt-4">
-      <div style={{
-        boxShadow: '0 2px 2px 0 rgba(0, 0, 0, .16), 0 0 0 1px rgba(0, 0, 0, .08)'
-      }} className='bg-white py-1.5 z-10 relative' >
-        <div className="flex items-center gap-4 mb-3 container mx-auto max-w-5xl">
+      <div
+        style={{
+          boxShadow:
+            "0 2px 2px 0 rgba(0, 0, 0, .16), 0 0 0 1px rgba(0, 0, 0, .08)",
+        }}
+        className="bg-white py-1.5 z-10 relative px-4"
+      >
+        <div className="flex items-center gap-4 mb-3 container mx-auto max-w-6xl">
           <div className="relative">
-            <div className='absolute bg-white w-24 h-24 rounded-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2' />
-            <img src="/logo.png" alt="Mutabiq" className="w-16 h-16 relative z-10" />
+            <div className="absolute bg-white w-24 h-24 rounded-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+            <img
+              src="/logo.png"
+              alt="Mutabiq"
+              className="w-16 h-16 relative z-10"
+            />
           </div>
-          <span className="text-xl font-light text-[#58595b] mb-5">Mutabiq</span>
+          <span className="text-xl font-light text-[#58595b] mb-5">
+            Mutabiq
+          </span>
         </div>
       </div>
-      <div className='bg-[#f5f7fa] -mt-6 pt-4'>
-      <div className="container mx-auto max-w-5xl mt-6 px-4">
-            <h2 className="text-2xl font-light my-3 text-[#58595b]">Conformity Certificates</h2>
-        <div className="bg-white rounded-lg shadow-sm p-6">
-          <div className="flex items-center justify-between mb-6">
-            <span className="px-3 py-1 bg-gray-100 text-[#58595b] rounded-full text-sm">
-              CCR #{report.certificateNumber}
-            </span>
+      <div className="bg-[#f5f7fa] -mt-6 pt-4">
+        <div className="container mx-auto max-w-6xl mt-6 px-4">
+          <h2 className="text-2xl font-light my-3 text-[#58595b]">
+            Conformity Certificates
+          </h2>
+          {/* Vehicle Information Table */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="bg-white rounded-lg shadow-sm p-6 md:col-span-2">
+              <table className="w-full border-collapse">
+                <tbody>
+                  <tr className="border-b border-white">
+                    <td className="py-2 px-4 bg-[#f0f0f0] w-1/4">
+                      <span className="text-sm font-normal text-[#58595b]">CCR Number</span>
+                    </td>
+                    <td className="py-2 px-4 bg-[#f9f9f9] ">
+                      <span className="text-[#58595b] font-bold text-sm">{report.certificateNumber}</span>
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white">
+                    <td className="py-2 px-4 bg-[#f0f0f0] w-1/4">
+                      <span className="text-sm font-normal text-[#58595b]">Approved On</span>
+                    </td>
+                    <td className="py-2 px-6  bg-[#f9f9f9]">
+                      <span className="text-[#58595b] font-bold text-sm">
+                        {new Date(report.approvedOn).toLocaleDateString()}
+                      </span>
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white">
+                    <td className="py-2 px-4 bg-[#f0f0f0] w-1/4">
+                      <span className="text-sm font-normal text-[#58595b]">Manufacturer</span>
+                    </td>
+                    <td className="py-2 px-6 bg-[#f9f9f9]">
+                      <span className="text-[#58595b] font-bold text-sm">{report.manufacturer}</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div className="mt-4 bg-[#e9e9e9]  p-6">
+                <h3 className="text-xl font-medium text-[#58595b] mb-4 text-center">
+                  Motor Vehicle
+                </h3>
+                <p className="text-xl text-[#58595b] text-center font-medium">
+                  {report.motorVehicle}
+                </p>
+              </div>
+              {/* add here */}
+            </div>
+            <div className="md:col-span-1 space-y-4">
+              <div className="bg-white rounded-lg p-6 flex flex-col items-center text-center">
+                <img src="/gas.svg" alt="Fuel Economy" className="w-12 h-12 mb-4" />
+                <h3 className="text-lg font-medium text-[#58595b] mb-2">GSO Fuel Economy Guide</h3>
+                <p className="text-sm text-[#58595b]">Browse and compare motor vehicles models based on fuel economy and technical specifications.</p>
+              </div>
+              <div className="bg-white rounded-lg p-6 flex flex-col items-center text-center">
+                <img src="/paper.svg" alt="Custom Clearance" className="w-12 h-12 mb-4" />
+                <h3 className="text-lg font-medium text-[#58595b] mb-2">Custom Clearance Guide</h3>
+                <p className="text-sm text-[#58595b]">An indicative guide for customs clearance of new motor vehicles, motorcycles and tyres.</p>
+              </div>
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-            <div className="p-4 bg-gray-50 rounded-lg">
-              <h3 className="text-sm font-medium text-[#58595b] mb-2">CCR Number</h3>
-              <p className="text-[#58595b]">{report.certificateNumber}</p>
-            </div>
-            <div className="p-4 bg-gray-50 rounded-lg">
-              <h3 className="text-sm font-medium text-[#58595b] mb-2">Approved On</h3>
-              <p className="text-[#58595b]">{new Date(report.approvedOn).toLocaleDateString()}</p>
-            </div>
-            <div className="p-4 bg-gray-50 rounded-lg">
-              <h3 className="text-sm font-medium text-[#58595b] mb-2">Manufacturer</h3>
-              <p className="text-[#58595b]">{report.manufacturer}</p>
-            </div>
-          </div>
 
-          <div className="bg-gray-50 rounded-lg p-6 mb-6">
-            <h3 className="text-xl font-medium text-[#58595b] mb-4">Motor Vehicle</h3>
-            <p className="text-lg text-[#58595b] text-center">{report.motorVehicle}</p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <div className="p-4 bg-gray-50 rounded-lg">
-              <h3 className="text-sm font-medium text-[#58595b] mb-2">Category</h3>
-              <p className="text-[#58595b]">{report.category}</p>
-            </div>
-            <div className="p-4 bg-gray-50 rounded-lg">
-              <h3 className="text-sm font-medium text-[#58595b] mb-2">Model Year</h3>
-              <p className="text-[#58595b]">{report.production}</p>
-            </div>
-            <div className="p-4 bg-gray-50 rounded-lg">
-              <h3 className="text-sm font-medium text-[#58595b] mb-2">Country of Production</h3>
-              <p className="text-[#58595b]">{report.productionCountry}</p>
-            </div>
-            <div className="p-4 bg-gray-50 rounded-lg">
-              <h3 className="text-sm font-medium text-[#58595b] mb-2">Produced in and after</h3>
-              <p className="text-[#58595b]">{report.producedInAfter}</p>
-            </div>
-            <div className="p-4 bg-gray-50 rounded-lg">
-              <h3 className="text-sm font-medium text-[#58595b] mb-2">VIN</h3>
-              <p className="text-[#58595b]">{report.vin}</p>
-            </div>
-          </div>
         </div>
-      </div>
       </div>
     </div>
   );
