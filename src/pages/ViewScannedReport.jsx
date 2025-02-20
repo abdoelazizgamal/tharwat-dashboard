@@ -69,7 +69,11 @@ const ViewScannedReport = () => {
                     </td>
                     <td className="py-2 px-4  bg-[#f9f9f9]">
                       <span className="text-[#262626] font-bold text-sm">
-                        {new Date(report.approvedOn).toLocaleDateString()}
+                        {new Date(report.approvedOn).toLocaleDateString('en-GB', {
+                          day: '2-digit',
+                          month: 'short',
+                          year: 'numeric'
+                        }).toUpperCase()}
                       </span>
                     </td>
                   </tr>
