@@ -79,6 +79,7 @@ const NewReport = () => {
         variantModel: formData.motorVehicle,
         production: formData.modelYear,
         producedInAfter: formData.productionDate,
+        country:formData.productionCountry,
         vin: formData.vin,
         specifications: {
           weights: {

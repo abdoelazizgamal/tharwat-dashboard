@@ -24,7 +24,7 @@ const EditReport = () => {
         motorVehicle: report.motorVehicle,
         category: report.category,
         modelYear: report.production,
-        productionCountry: 'INDONESIA',
+        productionCountry: report.country,
         productionDate: report.producedInAfter,
         vin: report.vin,
         engineType: report.specifications.engine.engineType,
@@ -90,6 +90,7 @@ const EditReport = () => {
         category: formData.category,
         variantModel: formData.motorVehicle,
         production: formData.modelYear,
+        country: formData.productionCountry,
         producedInAfter: formData.productionDate,
         vin: formData.vin,
         specifications: {
