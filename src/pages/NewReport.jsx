@@ -43,18 +43,11 @@ const NewReport = () => {
       chassisType: '',
       passengerCount: '',
       vehicleClass: '',
-      fuelEconomy: ''
+      fuelEconomy: '',
+      complianceInfo: ''
     }, 
     // "mode" : "onChange"
   });
-  const tabs = [
-    { id: 'basic', label: 'Basic Info' },
-    { id: 'technical', label: 'Technical' },
-    { id: 'dimensions', label: 'Dimensions' },
-    { id: 'engine', label: 'Engine' },
-    { id: 'other', label: 'Other Details' }
-  ];
-  const [createReport,{isLoading}] = useCreateReportMutation();
 
   const onSubmit = async (formData) => {
     try {
@@ -111,7 +104,8 @@ const NewReport = () => {
         fuelEconomy: {
           motorVehicleClass: formData.vehicleClass,
           feCombined: `${formData.fuelEconomy} km/L`
-        }
+        },
+        complianceInfo: formData.complianceInfo
       };
 
       await createReport(transformedData).unwrap();
@@ -122,7 +116,8 @@ const NewReport = () => {
       toast.error(error?.message || 'Failed to create report. Please try again.');
     }
   };
-  const renderInput = (label, name, type = "text", unit = "",) => {
+
+  const renderInput = (label, name, type = "text", unit = "", isTextArea = false) => {
     const requiredFields = [
       'certificateNumber', 'approvalDate', 'manufacturer', 'motorVehicle',
       'category', 'modelYear', 'productionCountry', 'productionDate', 'vin',
@@ -135,11 +130,18 @@ const NewReport = () => {
       <div className="space-y-2">
         <label className="text-sm font-medium text-blue-900">{label}{isRequired && ' *'}</label>
         <div className="relative">
-          <input
-            type={type}
-            {...register(name, { required: isRequired ? `${label} is required` : false })}
-            className={`shadow w-full px-4 py-2 rounded-lg bg-white/50 border ${errors[name] ? 'border-red-500' : 'border-white/30'} focus:outline-none focus:ring-2 focus:ring-blue-500`}
-          />
+          {isTextArea ? (
+            <textarea
+              {...register(name, { required: isRequired ? `${label} is required` : false })}
+              className={`shadow w-full px-4 py-2 rounded-lg bg-white/50 border ${errors[name] ? 'border-red-500' : 'border-white/30'} focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[120px]`}
+            />
+          ) : (
+            <input
+              type={type}
+              {...register(name, { required: isRequired ? `${label} is required` : false })}
+              className={`shadow w-full px-4 py-2 rounded-lg bg-white/50 border ${errors[name] ? 'border-red-500' : 'border-white/30'} focus:outline-none focus:ring-2 focus:ring-blue-500`}
+            />
+          )}
           {unit && (
             <span className="absolute right-3 top-[20px] -translate-y-1/2 text-sm text-blue-900/60">
               {unit}
@@ -154,6 +156,16 @@ const NewReport = () => {
       </div>
     );
   };
+
+  const tabs = [
+    { id: 'basic', label: 'Basic Info' },
+    { id: 'technical', label: 'Technical' },
+    { id: 'dimensions', label: 'Dimensions' },
+    { id: 'engine', label: 'Engine' },
+    { id: 'other', label: 'Other Details' }
+  ];
+  const [createReport,{isLoading}] = useCreateReportMutation();
+
   return (
     <div className="p-6 md:p-10">
       <div className="bg-white/60 backdrop-blur-xl rounded-xl shadow-sm border border-white/20">
@@ -240,6 +252,9 @@ const NewReport = () => {
                 {renderInput('Motor Vehicle Class', 'vehicleClass', 'text', '', )}
                 {renderInput('FE (CAFE) Combined', 'fuelEconomy', 'number', 'km/L', )}
                 {renderInput('e-Call (SoS) System', 'eCallSystem', 'text', '', )}
+              </div>
+              <div className="mt-6">
+                {renderInput('Additional Information and Local Standards', 'complianceInfo', 'text', '', true)}
               </div>
             </div>
             <div className="flex justify-end space-x-4 pt-6 border-t border-blue-100">
