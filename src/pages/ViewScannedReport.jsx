@@ -7,7 +7,16 @@ const ViewScannedReport = () => {
   const { data, isLoading, error } = useGetSingleReportQuery(id);
   const report = data?.data
 
-  if (isLoading) return <div className="p-6 text-center">Loading...</div>;
+  if (isLoading) return (
+    <div className="min-h-screen flex items-center justify-center p-6">
+      <div className="relative flex flex-col items-center justify-center">
+        <div className="absolute w-24 h-24 rounded-full bg-blue-50 animate-pulse"></div>
+        <img src="/logo.png" alt="Motabiq" className="w-16 h-16 relative z-10 top-10" />
+        <div className="absolute w-24 h-24 border-4 border-blue-600 rounded-full border-t-transparent animate-spin"></div>
+        <p className="mt-14 text-blue-900 font-medium animate-pulse">Loading...</p>
+      </div>
+    </div>
+  );
   if (error)
     return <div className="p-6 text-red-600">Error loading report</div>;
   if (!report)
@@ -26,13 +35,13 @@ const ViewScannedReport = () => {
           <div className="relative">
             <div className="absolute bg-white w-24 h-24 rounded-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
             <img
-              src="/logo.png"
-              alt="Mutabiq"
+              src="logo.png"
+              alt="Motabiq"
               className="w-16 h-16 relative z-10"
             />
           </div>
           <span className="text-xl font-light text-[#58595b] mb-5">
-            Mutabiq
+            Motabiq
           </span>
         </div>
       </div>

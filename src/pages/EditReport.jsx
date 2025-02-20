@@ -171,7 +171,7 @@ const EditReport = () => {
               type={type === "number" ? "number" : type}
               step={type === "number" ? "0.01" : ""}
               min={type === "number" ? "0" : ""}
-      
+
               {...register(name, { required: isRequired ? `${label} is required` : false })}
               className={`shadow w-full px-4 py-2 rounded-lg bg-white/50 border ${errors[name] ? 'border-red-500' : 'border-white/30'} focus:outline-none focus:ring-2 focus:ring-blue-500`}
             />
@@ -201,8 +201,13 @@ const EditReport = () => {
 
   if (isLoadingReport) {
     return (
-      <div className="p-6 md:p-10 flex justify-center items-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+      <div className="min-h-screen flex items-center justify-center p-6">
+        <div className="relative flex flex-col items-center justify-center">
+          <div className="absolute w-24 h-24 rounded-full bg-blue-50 animate-pulse"></div>
+          <img src="/logo.png" alt="Motabiq" className="w-16 h-16 relative z-10 top-10" />
+          <div className="absolute w-24 h-24 border-4 border-blue-600 rounded-full border-t-transparent animate-spin"></div>
+          <p className="mt-14 text-blue-900 font-medium animate-pulse">Loading...</p>
+        </div>
       </div>
     );
   }
@@ -226,11 +231,10 @@ const EditReport = () => {
                 key={tab.id}
                 type="button"
                 onClick={() => setActiveTab(tab.id)}
-                className={`px-4 py-2 rounded-lg whitespace-nowrap transition-colors cursor-pointer relative ${hasTabErrors(tab.id) ? 'text-red-600' : ''} ${
-                  activeTab === tab.id 
+                className={`px-4 py-2 rounded-lg whitespace-nowrap transition-colors cursor-pointer relative ${hasTabErrors(tab.id) ? 'text-red-600' : ''} ${activeTab === tab.id
                     ? hasTabErrors(tab.id) ? 'bg-red-600 text-white' : 'bg-blue-600 text-white'
                     : hasTabErrors(tab.id) ? 'text-red-600 hover:bg-red-50' : 'text-blue-600 hover:bg-blue-50'
-                }`}
+                  }`}
               >
                 {tab.label}
                 {hasTabErrors(tab.id) && (

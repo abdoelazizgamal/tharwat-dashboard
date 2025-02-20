@@ -11,18 +11,23 @@ const Dashboard = () => {
       <div className="bg-white/60 backdrop-blur-xl rounded-xl shadow-sm border border-white/20">
         <div className="p-6">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl font-semibold text-blue-900">All Reports</h2>
-            <button 
+            <h2 className="text-xl font-semibold text-blue-900">All Certificates</h2>
+            <button
               onClick={() => navigate('/new-report')}
               className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
             >
               New Report
             </button>
           </div>
-          
+
           {isLoading ? (
-            <div className="flex justify-center items-center py-8">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+            <div className=" flex items-center justify-center p-6">
+              <div className="relative flex flex-col items-center justify-center">
+                <div className="absolute w-24 h-24 rounded-full bg-blue-50 animate-pulse"></div>
+                <img src="/logo.png" alt="Motabiq" className="w-16 h-16 relative z-10 top-10" />
+                <div className="absolute w-24 h-24 border-4 border-blue-600 rounded-full border-t-transparent animate-spin"></div>
+                <p className="mt-14 text-blue-900 font-medium animate-pulse">Loading...</p>
+              </div>
             </div>
           ) : error ? (
             <div className="text-center py-8 text-red-600">

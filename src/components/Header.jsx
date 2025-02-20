@@ -21,7 +21,7 @@ const Header = ({ isSidebarOpen, setIsSidebarOpen, isProfileOpen, setIsProfileOp
               </svg>
             )}
           </button>
-          <span className="text-xl font-semibold text-blue-900">Reports Dashboard</span>
+          <span className="text-xl font-semibold text-blue-900">Certificates Dashboard</span>
         </div>
         <ProfileMenu isProfileOpen={isProfileOpen} setIsProfileOpen={setIsProfileOpen} />
       </div>

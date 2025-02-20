@@ -71,7 +71,7 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
               <img src='logo.png' alt='logo' className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-110" />
             </div>
             <h2 className="text-2xl font-bold text-blue-900">
-              Mutabiq
+              Motabiq
             </h2>
           </div>
           <button
