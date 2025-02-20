@@ -31,7 +31,7 @@ const ViewScannedReport = () => {
         }}
         className="bg-white py-1.5 z-10 relative px-4"
       >
-        <div className="flex items-center gap-4 mb-3 container mx-auto max-w-[1140px]">
+        <div className="flex items-center gap-4 mb-3 container mx-auto max-w-[1100px]">
           <div className="relative">
             <div className="absolute bg-white w-24 h-24 rounded-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
             <img
@@ -45,14 +45,14 @@ const ViewScannedReport = () => {
           </span>
         </div>
       </div>
-      <div className="bg-[#f5f7fa] -mt-6 pt-4 pb-8">
-        <div className="container mx-auto max-w-[1140px] mt-6 px-4">
+      <div className="bg-[#f5f7fa] -mt-6 pt-4 pb-12">
+        <div className="container mx-auto max-w-[1100px] mt-6 px-4">
           <h2 className="text-2xl font-light my-3 py-2 text-[#262626]">
             Conformity Certificates
           </h2>
           {/* Vehicle Information Table */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 shadow">
-            <div className="bg-white rounded-lg shadow-sm p-6 md:col-span-2">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 ">
+            <div className="bg-white rounded-lg shadow-sm p-6 md:col-span-2 shadow">
               <table className="w-full border-collapse">
                 <tbody>
                   <tr className="border-b border-white">
@@ -455,13 +455,13 @@ const ViewScannedReport = () => {
                 </table>
               </div>
             </div>
-            <div className="md:col-span-1 space-y-4 shadow">
-              <div className="bg-white rounded-lg py-8 px-6 flex flex-col items-center text-center">
+            <div className="md:col-span-1 space-y-4 ">
+              <div className="bg-white rounded-lg py-8 px-6 flex flex-col items-center text-center shadow">
                 <img src="/gas.svg" alt="Fuel Economy" className="w-16 h-16 mb-4" />
                 <h3 className="text-xl font-medium text-[#262626] mb-2">GSO Fuel Economy Guide</h3>
                 <p className="text-base text-[#262626]">Browse and compare motor vehicles models based on fuel economy and technical specifications.</p>
               </div>
-              <div className="bg-white rounded-lg py-8  px-6  flex flex-col items-center text-center">
+              <div className="bg-white rounded-lg py-8  px-6  flex flex-col items-center text-center shadow">
                 <img src="/paper.svg" alt="Custom Clearance" className="w-16 h-16 mb-4" />
                 <h3 className="text-xl font-medium text-[#262626] mb-2">Custom Clearance Guide</h3>
                 <p className="text-base text-[#262626]">An indicative guide for customs clearance of new motor vehicles, motorcycles and tyres.</p>
