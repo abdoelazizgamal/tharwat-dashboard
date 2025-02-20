@@ -68,7 +68,7 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
         <div className="flex items-center justify-between px-4 py-6">
           <div className="flex items-center gap-3">
             <div className="h-10 w-10 rounded-xl flex items-center justify-center relative group">
-              <img src='./logo.png' alt='logo' className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-110" />
+              <img src='logo.png' alt='logo' className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-110" />
             </div>
             <h2 className="text-2xl font-bold text-blue-900">
               Mutabiq
