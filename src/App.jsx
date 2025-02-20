@@ -1,8 +1,9 @@
 import { createBrowserRouter, RouterProvider, Navigate, redirect } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+
 import SignIn from './pages/SignIn';
 import Dashboard from './pages/Dashboard';
 import NewReport from './pages/NewReport';
+import ViewReport from './pages/ViewReport';
 import Layout from './Layout/Layout';
 import ProtectedRoute from './components/ProtectedRoute';
 
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
       {
         path: "new-report",
         element: <NewReport />
+      },
+      {
+        path: "report/:id",
+        element: <ViewReport />
       }
     ]
   },
