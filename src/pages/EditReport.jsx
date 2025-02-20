@@ -136,7 +136,7 @@ const EditReport = () => {
         },
         fuelEconomy: {
           motorVehicleClass: formData.vehicleClass,
-          feCombined: `${formData.fuelEconomy} km/L`
+          feCombined: formData.fuelEconomy
         },
         complianceInfo: formData.complianceInfo
       };
