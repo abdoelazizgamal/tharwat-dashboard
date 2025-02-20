@@ -113,7 +113,8 @@ const NewReport = () => {
             netEnginePower: formData.netEnginePower,
             pollutantLimit: formData.pollutantLimit,
             transmission: formData.transmission,
-            sosSystem: formData.eCallSystem
+            sosSystem: formData.eCallSystem,
+            engineRPM:formData.engineRPM
           },
           brakes: {
             serviceBrakes: formData.serviceBrakes,

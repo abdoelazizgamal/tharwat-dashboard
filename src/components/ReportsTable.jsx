@@ -8,13 +8,25 @@ const ReportsTable = ({ reports }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [reportToDelete, setReportToDelete] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
   const [deleteReport, { isLoading: isDeleting }] = useDeleteReportMutation();
   const reportsPerPage = 10;
+
+  // Filter reports based on search query
+  const filteredReports = reports?.filter(report =>
+    report.certificateNumber.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   // Get current reports
   const indexOfLastReport = currentPage * reportsPerPage;
   const indexOfFirstReport = indexOfLastReport - reportsPerPage;
-  const currentReports = reports?.slice(indexOfFirstReport, indexOfLastReport);
+  const currentReports = filteredReports?.slice(indexOfFirstReport, indexOfLastReport);
+
+  // Reset to first page when search query changes
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value);
+    setCurrentPage(1);
+  };
 
   // Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -33,6 +45,23 @@ const ReportsTable = ({ reports }) => {
 
   return (
     <>
+      <div className="mb-4">
+        <div className="relative shadow">
+          <input
+            type="text"
+            placeholder="Search by Certificate Number..."
+            value={searchQuery}
+            onChange={handleSearch}
+            className="w-full px-4 py-2 rounded-lg bg-white/50 border border-white/30 focus:outline-none focus:ring-2 focus:ring-blue-500 pl-10"
+          />
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <svg className="h-5 w-5 text-blue-900/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </div>
+        </div>
+      </div>
+
       <div className="overflow-x-auto">
         <table className="w-full">
           <thead className="bg-blue-50/50">
@@ -45,7 +74,7 @@ const ReportsTable = ({ reports }) => {
             </tr>
           </thead>
           <tbody className="divide-y divide-blue-100/20">
-            {currentReports.map((report) => (
+            {currentReports?.map((report) => (
               <tr key={report._id} className="hover:bg-blue-50/30 transition-colors">
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-blue-900">
                   {report.certificateNumber}
@@ -62,7 +91,7 @@ const ReportsTable = ({ reports }) => {
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-right space-x-2">
                   <button 
                     onClick={() => navigate(`/report/${report._id}`)}
-                    className="inline-flex  cursor-pointer items-center justify-center p-2 rounded-lg text-blue-600 hover:text-white hover:bg-blue-600 transition-all duration-200"
+                    className="inline-flex cursor-pointer items-center justify-center p-2 rounded-lg text-blue-600 hover:text-white hover:bg-blue-600 transition-all duration-200"
                     title="View Report"
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -72,7 +101,7 @@ const ReportsTable = ({ reports }) => {
                   </button>
                   <button 
                     onClick={() => navigate(`/edit-report/${report._id}`)}
-                    className="inline-flex  cursor-pointer items-center justify-center p-2 rounded-lg text-emerald-600 hover:text-white hover:bg-emerald-600 transition-all duration-200"
+                    className="inline-flex cursor-pointer items-center justify-center p-2 rounded-lg text-emerald-600 hover:text-white hover:bg-emerald-600 transition-all duration-200"
                     title="Edit Report"
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -99,36 +128,41 @@ const ReportsTable = ({ reports }) => {
       </div>
       
       {/* Pagination */}
-      <div className="flex justify-center items-center space-x-2 mt-6 ">
-        <button
-          onClick={() => paginate(currentPage - 1)}
-          disabled={currentPage === 1}
-          className={`p-2 rounded-lg ${currentPage === 1 ? 'text-gray-400 cursor-not-allowed' : 'text-blue-600 hover:bg-blue-50 cursor-pointer'}`}
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
-          </svg>
-        </button>
-        
-        {Array.from({ length: Math.ceil(reports.length / reportsPerPage) }).map((_, index) => (
+      <div className="flex justify-between items-center mt-6">
+        <p className="text-sm text-blue-900/60">
+          Showing {currentReports?.length} of {filteredReports?.length} reports
+        </p>
+        <div className="flex items-center space-x-2">
           <button
-            key={index}
-            onClick={() => paginate(index + 1)}
-            className={`px-3 py-1 rounded-lg transition-colors cursor-pointer ${currentPage === index + 1 ? 'bg-blue-600 text-white' : 'text-blue-600 hover:bg-blue-50 '}`}
+            onClick={() => paginate(currentPage - 1)}
+            disabled={currentPage === 1}
+            className={`p-2 rounded-lg ${currentPage === 1 ? 'text-gray-400 cursor-not-allowed' : 'text-blue-600 hover:bg-blue-50 cursor-pointer'}`}
           >
-            {index + 1}
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+            </svg>
           </button>
-        ))}
+          
+          {Array.from({ length: Math.ceil((filteredReports?.length || 0) / reportsPerPage) }).map((_, index) => (
+            <button
+              key={index}
+              onClick={() => paginate(index + 1)}
+              className={`px-3 py-1 rounded-lg transition-colors cursor-pointer ${currentPage === index + 1 ? 'bg-blue-600 text-white' : 'text-blue-600 hover:bg-blue-50'}`}
+            >
+              {index + 1}
+            </button>
+          ))}
 
-        <button
-          onClick={() => paginate(currentPage + 1)}
-          disabled={currentPage === Math.ceil(reports.length / reportsPerPage)}
-          className={`p-2 rounded-lg  ${currentPage === Math.ceil(reports.length / reportsPerPage) ? 'text-gray-400 cursor-not-allowed' : 'text-blue-600 hover:bg-blue-50 cursor-pointer'}`}
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-          </svg>
-        </button>
+          <button
+            onClick={() => paginate(currentPage + 1)}
+            disabled={currentPage === Math.ceil((filteredReports?.length || 0) / reportsPerPage)}
+            className={`p-2 rounded-lg ${currentPage === Math.ceil((filteredReports?.length || 0) / reportsPerPage) ? 'text-gray-400 cursor-not-allowed' : 'text-blue-600 hover:bg-blue-50 cursor-pointer'}`}
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
       </div>
 
       {/* Delete Confirmation Modal */}
@@ -140,7 +174,7 @@ const ReportsTable = ({ reports }) => {
               setReportToDelete(null);
             }
           }}
-          className="fixed inset-0  backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-opacity duration-300 ease-in-out"
+          className="fixed inset-0 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-opacity duration-300 ease-in-out"
         >
           <div className="bg-white rounded-xl shadow-lg max-w-md w-full p-6 space-y-4 transform transition-all duration-300 ease-in-out">
             <div className="flex items-center justify-center w-12 h-12 rounded-full bg-red-100 mx-auto">

@@ -1,7 +1,7 @@
 
 import { useParams } from "react-router-dom";
 import { useGetSingleReportQuery } from "../store/api/reportsApi";
-
+import logo from "../assets/logo.png"
 const ViewScannedReport = () => {
   const { id } = useParams();
   const { data, isLoading, error } = useGetSingleReportQuery(id);
@@ -11,7 +11,7 @@ const ViewScannedReport = () => {
     <div className="min-h-screen flex items-center justify-center p-6">
       <div className="relative flex flex-col items-center justify-center">
         <div className="absolute w-24 h-24 rounded-full bg-blue-50 animate-pulse"></div>
-        <img src="/logo.png" alt="Motabiq" className="w-16 h-16 relative z-10 top-10" />
+        <img src={logo} alt="Motabiq" className="w-16 h-16 relative z-10 top-10" />
         <div className="absolute w-24 h-24 border-4 border-blue-600 rounded-full border-t-transparent animate-spin"></div>
         <p className="mt-14 text-blue-900 font-medium animate-pulse">Loading...</p>
       </div>
