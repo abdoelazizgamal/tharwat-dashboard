@@ -1,11 +1,11 @@
 import { useParams } from 'react-router-dom';
-import { useGetReportsQuery } from '../store/api/reportsApi';
+import {  useGetSingleReportQuery } from '../store/api/reportsApi';
 
 const ViewReport = () => {
   const { id } = useParams();
   
-  const { data, isLoading, error } = useGetReportsQuery();
-  const report = data?.data?.find((report) => report._id === id);
+  const { data, isLoading, error } = useGetSingleReportQuery(id);
+  const report = data?.data
   if (isLoading) {
     return (
       <div className="p-6 md:p-10 flex justify-center items-center">
@@ -219,7 +219,7 @@ const ViewReport = () => {
             {/* QR Code Section */}
             <div className="flex flex-col items-center justify-start p-6 bg-white/40 rounded-xl">
               <h3 className="text-lg font-medium text-blue-900 mb-4">Certificate QR Code</h3>
-              <img src={report.qrCode} alt="Certificate QR Code" className="w-48 h-48 object-contain" />
+              <img src={report.qrCode} alt="Certificate QR Code" className="w-64 h-64 object-contain" />
               <p className="mt-4 text-sm text-blue-800/70 text-center">Scan to verify certificate authenticity</p>
             </div>
           </div>

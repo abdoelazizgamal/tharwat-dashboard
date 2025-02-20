@@ -6,6 +6,7 @@ import NewReport from './pages/NewReport';
 import ViewReport from './pages/ViewReport';
 import Layout from './Layout/Layout';
 import ProtectedRoute from './components/ProtectedRoute';
+import ViewScannedReport from './pages/ViewScannedReport';
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
         element: <ViewReport />
       }
     ]
+  },
+  {
+    path: "/:id",
+    element: <ViewScannedReport />
   },
   {
     path: "*",

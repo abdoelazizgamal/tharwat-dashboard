@@ -18,6 +18,10 @@ export const reportsApi = createApi({
       query: () => '/report',
       providesTags: ['Reports'],
     }),
+    getSingleReport: builder.query({
+      query: (id) => `/report/${id}`,
+      providesTags: ['Reports'],
+    }),
     createReport: builder.mutation({
       query: (reportData) => ({
         url: '/report/add',
@@ -39,6 +43,7 @@ export const reportsApi = createApi({
 
 export const {
   useGetReportsQuery,
+  useGetSingleReportQuery,
   useCreateReportMutation,
   useUpdateReportMutation,
 } = reportsApi;

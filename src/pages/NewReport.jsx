@@ -119,7 +119,7 @@ const NewReport = () => {
       navigate('/');
     } catch (error) {
       console.error('Failed to create report:', error);
-      toast.error(error.data?.message || 'Failed to create report. Please try again.');
+      toast.error(error?.message || 'Failed to create report. Please try again.');
     }
   };
   const renderInput = (label, name, type = "text", unit = "",) => {
