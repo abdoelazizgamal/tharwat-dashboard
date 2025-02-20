@@ -8,7 +8,7 @@ const EditReport = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [activeTab, setActiveTab] = useState('basic');
-  const {pathname} = useLocation();
+  const { pathname } = useLocation();
 
   const { data: reportData, isLoading: isLoadingReport } = useGetSingleReportQuery(id);
   const [updateReport, { isLoading: isUpdating }] = useUpdateReportMutation();
@@ -17,7 +17,6 @@ const EditReport = () => {
   useEffect(() => {
     if (reportData?.data) {
       const report = reportData.data;
-      console.log(report.approvedOn)
       reset({
         certificateNumber: report.certificateNumber,
         approvalDate: new Date(report.approvedOn).toISOString().split('T')[0],
@@ -146,7 +145,10 @@ const EditReport = () => {
             />
           ) : (
             <input
-              type={type}
+              type={type === "number" ? "number" : type}
+              step={type === "number" ? "0.01" : ""}
+              min={type === "number" ? "0" : ""}
+
               {...register(name, { required: isRequired ? `${label} is required` : false })}
               className={`shadow w-full px-4 py-2 rounded-lg bg-white/50 border ${errors[name] ? 'border-red-500' : 'border-white/30'} focus:outline-none focus:ring-2 focus:ring-blue-500`}
             />
@@ -188,7 +190,7 @@ const EditReport = () => {
         <div className="p-6">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-2xl font-semibold text-blue-900">Edit Conformity Certificate</h2>
-            {pathname !=="/new-report" && (
+            {pathname !== "/new-report" && (
               <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">
                 CCR #{reportData?.data?.certificateNumber}
               </span>
@@ -201,11 +203,10 @@ const EditReport = () => {
                 key={tab.id}
                 type="button"
                 onClick={() => setActiveTab(tab.id)}
-                className={`px-4 py-2 rounded-lg whitespace-nowrap transition-colors cursor-pointer ${
-                  activeTab === tab.id 
-                    ? 'bg-blue-600 text-white' 
+                className={`px-4 py-2 rounded-lg whitespace-nowrap transition-colors cursor-pointer ${activeTab === tab.id
+                    ? 'bg-blue-600 text-white'
                     : 'text-blue-600 hover:bg-blue-50'
-                }`}
+                  }`}
               >
                 {tab.label}
               </button>
@@ -215,59 +216,59 @@ const EditReport = () => {
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
             <div className={activeTab === 'basic' ? 'block' : 'hidden'}>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {renderInput('CCR Number', 'certificateNumber', 'text', '', )}
-                {renderInput('Approved On', 'approvalDate', 'date', '', )}
-                {renderInput('Manufacturer', 'manufacturer', 'text', '', )}
-                {renderInput('Motor Vehicle', 'motorVehicle', 'text', '', )}
-                {renderInput('Category', 'category', 'text', '', )}
-                {renderInput('Model Year', 'modelYear', 'text', '', )}
-                {renderInput('Country of Production', 'productionCountry', 'text', '', )}
-                {renderInput('Produced in and after', 'productionDate', 'month', '', )}
-                {renderInput('VIN', 'vin', 'text', '', )}
+                {renderInput('CCR Number', 'certificateNumber', 'text', '',)}
+                {renderInput('Approved On', 'approvalDate', 'date', '',)}
+                {renderInput('Manufacturer', 'manufacturer', 'text', '',)}
+                {renderInput('Motor Vehicle', 'motorVehicle', 'text', '',)}
+                {renderInput('Category', 'category', 'text', '',)}
+                {renderInput('Model Year', 'modelYear', 'text', '',)}
+                {renderInput('Country of Production', 'productionCountry', 'text', '',)}
+                {renderInput('Produced in and after', 'productionDate', 'month', '',)}
+                {renderInput('VIN', 'vin', 'text', '',)}
               </div>
             </div>
 
             <div className={activeTab === 'technical' ? 'block' : 'hidden'}>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {renderInput('Max Vehicle Weight', 'maxVehicleWeight', 'number', 'kg', )}
-                {renderInput('Curb Weight', 'curb', 'number', 'kg', )}
-                {renderInput('Front Axle Weight', 'frontAxleWeight', 'number', 'kg', )}
-                {renderInput('Rear Axle Weight', 'rearAxleWeight', 'number', 'kg', )}
-                {renderInput('Type of chassis and body', 'chassisType', 'text', '', )}
-                {renderInput('Number of passengers', 'passengerCount', 'number', '', )}
+                {renderInput('Max Vehicle Weight', 'maxVehicleWeight', 'number', 'kg',)}
+                {renderInput('Curb Weight', 'curb', 'number', 'kg',)}
+                {renderInput('Front Axle Weight', 'frontAxleWeight', 'number', 'kg',)}
+                {renderInput('Rear Axle Weight', 'rearAxleWeight', 'number', 'kg',)}
+                {renderInput('Type of chassis and body', 'chassisType', 'text', '',)}
+                {renderInput('Number of passengers', 'passengerCount', 'number', '',)}
               </div>
             </div>
 
             <div className={activeTab === 'dimensions' ? 'block' : 'hidden'}>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {renderInput('Length', 'length', 'number', 'mm', )}
-                {renderInput('Width', 'width', 'number', 'mm', )}
-                {renderInput('Height', 'height', 'number', 'mm', )}
-                {renderInput('(F1 - R1)', 'wheelbase', 'number', 'mm', )}
-                {renderInput('Front Track', 'frontTrack', 'number', 'mm', )}
-                {renderInput('Rear Track', 'rearTrack', 'number', 'mm', )}
+                {renderInput('Length', 'length', 'number', 'mm',)}
+                {renderInput('Width', 'width', 'number', 'mm',)}
+                {renderInput('Height', 'height', 'number', 'mm',)}
+                {renderInput('(F1 - R1)', 'wheelbase', 'number', 'mm',)}
+                {renderInput('Front Track', 'frontTrack', 'number', 'mm',)}
+                {renderInput('Rear Track', 'rearTrack', 'number', 'mm',)}
               </div>
             </div>
             <div className={activeTab === 'engine' ? 'block' : 'hidden'}>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {renderInput('Engine Type', 'engineType', 'text', '', )}
-                {renderInput('Cylinders', 'cylinders', 'number', '', )}
-                {renderInput('Displacement', 'displacement', 'number', 'cc', )}
-                {renderInput('Air Intake', 'airIntake', 'text', '', )}
-                {renderInput('Net Engine Power', 'netEnginePower', 'number', 'kW', )}
-                {renderInput('at RPM', 'engineRPM', 'number', 'rpm', )}
-                {renderInput('Pollutant Limit', 'pollutantLimit', 'text', '', )}
-                {renderInput('Transmission', 'transmission', 'text', '', )}
+                {renderInput('Engine Type', 'engineType', 'text', '',)}
+                {renderInput('Cylinders', 'cylinders', 'number', '',)}
+                {renderInput('Displacement', 'displacement', 'number', 'cc',)}
+                {renderInput('Air Intake', 'airIntake', 'text', '',)}
+                {renderInput('Net Engine Power', 'netEnginePower', 'number', 'kW',)}
+                {renderInput('at RPM', 'engineRPM', 'number', 'rpm',)}
+                {renderInput('Pollutant Limit', 'pollutantLimit', 'text', '',)}
+                {renderInput('Transmission', 'transmission', 'text', '',)}
               </div>
             </div>
 
             <div className={activeTab === 'other' ? 'block' : 'hidden'}>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {renderInput('Service Brakes', 'serviceBrakes', 'text', '', )}
-                {renderInput('Emergency Brakes', 'emergencyBrakes', 'text', '', )}
-                {renderInput('Motor Vehicle Class', 'vehicleClass', 'text', '', )}
-                {renderInput('FE (CAFE) Combined', 'fuelEconomy', 'number', 'km/L', )}
-                {renderInput('e-Call (SoS) System', 'eCallSystem', 'text', '', )}
+                {renderInput('Service Brakes', 'serviceBrakes', 'text', '',)}
+                {renderInput('Emergency Brakes', 'emergencyBrakes', 'text', '',)}
+                {renderInput('Motor Vehicle Class', 'vehicleClass', 'text', '',)}
+                {renderInput('FE (CAFE) Combined', 'fuelEconomy', 'number', 'km/L',)}
+                {renderInput('e-Call (SoS) System', 'eCallSystem', 'text', '',)}
               </div>
               <div className="mt-6">
                 {renderInput('Additional Information and Local Standards', 'complianceInfo', 'text', '', true)}

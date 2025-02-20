@@ -164,7 +164,9 @@ const NewReport = () => {
             />
           ) : (
             <input
-              type={type}
+              type={type === "number" ? "number" : type}
+              step={type === "number" ? "0.01" : ""}
+              min={type === "number" ? "0" : ""}
               {...register(name, { required: isRequired ? `${label} is required` : false })}
               className={`shadow w-full px-4 py-2 rounded-lg bg-white/50 border ${errors[name] ? 'border-red-500' : 'border-white/30'} focus:outline-none focus:ring-2 focus:ring-blue-500`}
             />
