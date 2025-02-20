@@ -1,6 +1,6 @@
 
 import { useParams } from "react-router-dom";
-import {  useGetSingleReportQuery } from "../store/api/reportsApi";
+import { useGetSingleReportQuery } from "../store/api/reportsApi";
 
 const ViewScannedReport = () => {
   const { id } = useParams();
@@ -216,7 +216,7 @@ const ViewScannedReport = () => {
                     </tr>
                     <tr className=" border-b-[4px] border-white bg-[#f8f9fa]  ">
                       <td colSpan={2} className="py-2 px-4 font-bold text-sm text-[#58595b]" >
-                      Wheelbase
+                        Wheelbase
                       </td>
                     </tr>
                     <tr className="border-b border-white">
@@ -229,7 +229,7 @@ const ViewScannedReport = () => {
                     </tr>
                     <tr className=" border-b-[4px] border-white bg-[#f8f9fa]  ">
                       <td colSpan={2} className="py-2 px-4 font-bold text-sm text-[#58595b]" >
-                      Track
+                        Track
                       </td>
                     </tr>
                     <tr className="border-b border-white">
@@ -327,9 +327,9 @@ const ViewScannedReport = () => {
                       </td>
                       <td className="py-2 px-4 bg-[#f9f9f9]">
                         <span className="text-[#58595b] font-bold text-sm">{report?.specifications?.engine?.netEnginePower}
-                          <span className="text-sm font-normal"> kW </span>  at  {report?.specifications?.engine?.engineRPM}  
+                          <span className="text-sm font-normal"> kW </span>  at  {report?.specifications?.engine?.engineRPM}
                           <span className="text-sm font-normal"> rpm </span>
-                          
+
                         </span>
                       </td>
                     </tr>
@@ -355,6 +355,66 @@ const ViewScannedReport = () => {
                       </td>
                       <td className="py-2 px-4 bg-[#f9f9f9]">
                         <span className="text-[#58595b] font-bold text-sm">{report?.specifications?.engine?.sosSystem}</span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Brakes */}
+              <div className="mt-4">
+                <table className="w-full border-collapse">
+                  <tbody>
+                    <tr className=" border-b-[4px] border-white bg-[#f8f9fa]  ">
+                      <td colSpan={2} className="py-2 px-4 font-bold text-sm text-[#58595b]" >
+                        Brakes
+                      </td>
+                    </tr>
+                    <tr className="border-b border-white">
+                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/4">
+                        <span className="text-sm font-normal text-[#58595b]">Service Brakes</span>
+                      </td>
+                      <td className="py-2 px-4 bg-[#f9f9f9]">
+                        <span className="text-[#58595b] font-bold text-sm">{report?.specifications?.brakes?.serviceBrakes}</span>
+                      </td>
+                    </tr>
+                    <tr className="border-b border-white">
+                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/4">
+                        <span className="text-sm font-normal text-[#58595b]">Emergency Brake</span>
+                      </td>
+                      <td className="py-2 px-4 bg-[#f9f9f9]">
+                        <span className="text-[#58595b] font-bold text-sm">{report?.specifications?.brakes?.emergencyBrake}</span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Fuel Economy */}
+              <div className="mt-4">
+                <table className="w-full border-collapse">
+                  <tbody>
+                    <tr className=" border-b-[4px] border-white bg-[#f8f9fa]  ">
+                      <td colSpan={2} className="py-2 px-4 font-bold text-sm text-[#58595b]" >
+                        Fuel Economy
+                      </td>
+                    </tr>
+                    <tr className="border-b border-white">
+                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/4">
+                        <span className="text-sm font-normal text-[#58595b]">Motor Vehicle Class</span>
+                      </td>
+                      <td className="py-2 px-4 bg-[#f9f9f9]">
+                        <span className="text-[#58595b] font-bold text-sm">{report?.fuelEconomy?.motorVehicleClass}</span>
+                      </td>
+                    </tr>
+                    <tr className="border-b border-white">
+                      <td className="py-2 px-4 bg-[#f0f0f0] w-1/4">
+                        <span className="text-sm font-normal text-[#58595b]">FE (CAFE) Combined</span>
+                      </td>
+                      <td className="py-2 px-4 bg-[#f9f9f9]">
+                        <span className="text-[#58595b] font-bold text-sm">{report?.fuelEconomy?.feCombined}
+                          <span className="text-sm font-normal">   km/L   </span>
+                        </span>
                       </td>
                     </tr>
                   </tbody>
