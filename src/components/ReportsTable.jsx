@@ -57,6 +57,7 @@ const ReportsTable = ({ reports }) => {
                     </svg>
                   </button>
                   <button 
+                    onClick={() => navigate(`/edit-report/${report._id}`)}
                     className="inline-flex  cursor-pointer items-center justify-center p-2 rounded-lg text-emerald-600 hover:text-white hover:bg-emerald-600 transition-all duration-200"
                     title="Edit Report"
                   >

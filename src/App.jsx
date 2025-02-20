@@ -7,6 +7,7 @@ import ViewReport from './pages/ViewReport';
 import Layout from './Layout/Layout';
 import ProtectedRoute from './components/ProtectedRoute';
 import ViewScannedReport from './pages/ViewScannedReport';
+import EditReport from './pages/EditReport';
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: "report/:id",
         element: <ViewReport />
+      },
+      {
+        path: "edit-report/:id",
+        element: <EditReport />
       }
     ]
   },
