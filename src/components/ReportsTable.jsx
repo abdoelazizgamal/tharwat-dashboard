@@ -99,11 +99,11 @@ const ReportsTable = ({ reports }) => {
       </div>
       
       {/* Pagination */}
-      <div className="flex justify-center items-center space-x-2 mt-6">
+      <div className="flex justify-center items-center space-x-2 mt-6 ">
         <button
           onClick={() => paginate(currentPage - 1)}
           disabled={currentPage === 1}
-          className={`p-2 rounded-lg ${currentPage === 1 ? 'text-gray-400 cursor-not-allowed' : 'text-blue-600 hover:bg-blue-50'}`}
+          className={`p-2 rounded-lg ${currentPage === 1 ? 'text-gray-400 cursor-not-allowed' : 'text-blue-600 hover:bg-blue-50 cursor-pointer'}`}
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
@@ -114,7 +114,7 @@ const ReportsTable = ({ reports }) => {
           <button
             key={index}
             onClick={() => paginate(index + 1)}
-            className={`px-3 py-1 rounded-lg transition-colors ${currentPage === index + 1 ? 'bg-blue-600 text-white' : 'text-blue-600 hover:bg-blue-50'}`}
+            className={`px-3 py-1 rounded-lg transition-colors cursor-pointer ${currentPage === index + 1 ? 'bg-blue-600 text-white' : 'text-blue-600 hover:bg-blue-50 '}`}
           >
             {index + 1}
           </button>
@@ -123,7 +123,7 @@ const ReportsTable = ({ reports }) => {
         <button
           onClick={() => paginate(currentPage + 1)}
           disabled={currentPage === Math.ceil(reports.length / reportsPerPage)}
-          className={`p-2 rounded-lg ${currentPage === Math.ceil(reports.length / reportsPerPage) ? 'text-gray-400 cursor-not-allowed' : 'text-blue-600 hover:bg-blue-50'}`}
+          className={`p-2 rounded-lg  ${currentPage === Math.ceil(reports.length / reportsPerPage) ? 'text-gray-400 cursor-not-allowed' : 'text-blue-600 hover:bg-blue-50 cursor-pointer'}`}
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
