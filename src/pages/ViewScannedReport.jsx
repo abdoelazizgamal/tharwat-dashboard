@@ -460,15 +460,15 @@ const ViewScannedReport = () => {
               </div>
             </div>
             <div className="md:col-span-1 space-y-4 ">
-              <div className="bg-white rounded-lg py-8 px-6 flex flex-col items-center text-center shadow">
-                <img src="/gas.svg" alt="Fuel Economy" className="w-16 h-16 mb-4" />
-                <h3 className="text-xl font-medium text-[#262626] mb-2">GSO Fuel Economy Guide</h3>
-                <p className="text-base text-[#262626]">Browse and compare motor vehicles models based on fuel economy and technical specifications.</p>
+              <div className="bg-white text-[#262626] rounded-lg py-8 px-6 flex flex-col items-center text-center shadow hover:shadow-[0_.5rem_.7rem_rgba(0,0,0,.15)] hover:text-[#31708f] hover:bg-gradient-to-b hover:from-[rgba(223,249,255,.7)] hover:from-5% hover:to-white hover:to-95% transition-all duration-200 group">
+                <img src="/gas.svg" alt="Fuel Economy" className="w-16 h-16 mb-4 group-hover:scale-110 transition-all duration-200" />
+                <h3 className="text-xl font-medium mb-2">GSO Fuel Economy Guide</h3>
+                <p className="text-base">Browse and compare motor vehicles models based on fuel economy and technical specifications.</p>
               </div>
-              <div className="bg-white rounded-lg py-8  px-6  flex flex-col items-center text-center shadow">
-                <img src="/paper.svg" alt="Custom Clearance" className="w-16 h-16 mb-4" />
-                <h3 className="text-xl font-medium text-[#262626] mb-2">Custom Clearance Guide</h3>
-                <p className="text-base text-[#262626]">An indicative guide for customs clearance of new motor vehicles, motorcycles and tyres.</p>
+              <div className="bg-white text-[#262626] rounded-lg py-8  px-6  flex flex-col items-center text-center shadow hover:shadow-[0_.5rem_.7rem_rgba(0,0,0,.15)] hover:text-[#856404] hover:bg-gradient-to-b hover:from-[rgba(255,243,205,.7)] hover:from-5% hover:to-white hover:to-95% transition-all duration-200 group">
+                <img src="/paper.svg" alt="Custom Clearance" className="w-16 h-16 mb-4 group-hover:scale-110 transition-all duration-200" />
+                <h3 className="text-xl font-medium  mb-2">Custom Clearance Guide</h3>
+                <p className="text-base">An indicative guide for customs clearance of new motor vehicles, motorcycles and tyres.</p>
               </div>
             </div>
           </div>
