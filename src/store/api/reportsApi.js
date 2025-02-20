@@ -38,6 +38,13 @@ export const reportsApi = createApi({
       }),
       invalidatesTags: ['Reports'],
     }),
+    deleteReport: builder.mutation({
+      query: (id) => ({
+        url: `/report/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Reports'],
+    }),
   }),
 });
 
@@ -46,4 +53,5 @@ export const {
   useGetSingleReportQuery,
   useCreateReportMutation,
   useUpdateReportMutation,
+  useDeleteReportMutation,
 } = reportsApi;

@@ -8,7 +8,7 @@ const ProfileMenu = ({ isProfileOpen, setIsProfileOpen }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.auth.user);
-  console.log(user)
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {

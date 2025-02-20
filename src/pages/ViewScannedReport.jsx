@@ -440,7 +440,7 @@ const ViewScannedReport = () => {
                     </tr>
                     <tr className=" border-b-[4px] border-white bg-[#f8f9fa]  ">
                       <td colSpan={2} className="py-2 px-4 font-normal text-sm text-[#58595b]" >
-                      1) Also comply with the National regulations for member countries mentioned in the Annex of the list of Technical Regulations for MV 2024 MY-D2, when exporting to those countries. 2) Height : 1620mm(16" tyre) / 1630mm(17" tyre) 3) Track : Front 1561 Rear 1565mm for 17" tyre and Front 1572 Rear 1576 for 18" tyre
+                      {report?.complianceInfo}
 
                       </td>
                     </tr>
