@@ -91,8 +91,8 @@ const ViewScannedReport = () => {
                 <h3 className="  mb-2 ">
                   Motor Vehicle
                 </h3>
-                <p className="   ">
-                  {report.motorVehicle}
+                <p className="whitespace-pre-line">
+                  {report.motorVehicle?.replace(/\$/g, '\n')}
                 </p>
               </div>
               <div className="mt-4">
