@@ -31,7 +31,7 @@ const ViewScannedReport = () => {
         }}
         className="bg-white py-1.5 z-10 relative px-4"
       >
-        <div className="flex items-center gap-4 mb-3 container mx-auto max-w-[1100px]">
+        <div className="flex items-center gap-4 mb-3 container mx-auto max-w-[1150px]">
           <div className="relative">
             <div className="absolute bg-white w-24 h-24 rounded-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
             <img
@@ -46,13 +46,13 @@ const ViewScannedReport = () => {
         </div>
       </div>
       <div className="bg-[#f5f7fa] -mt-6 pt-4 pb-12">
-        <div className="container mx-auto max-w-[1100px] mt-6 px-4">
+        <div className="container mx-auto max-w-[1150px] mt-6 px-4">
           <h2 className="text-2xl font-light my-3 py-2 text-[#262626]">
             Conformity Certificates
           </h2>
           {/* Vehicle Information Table */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 ">
-            <div className="bg-white rounded-lg  p-6 md:col-span-2 shadow">
+            <div className="bg-white rounded-lg  p-4 py-6 md:p-6 md:col-span-2 shadow">
               <table className="w-full border-collapse">
                 <tbody>
                   <tr className="border-b border-white">
@@ -87,12 +87,12 @@ const ViewScannedReport = () => {
                   </tr>
                 </tbody>
               </table>
-              <div className="mt-4 bg-[#e9e9e9]  p-6 text-[#555] text-xl  text-center font-meduim">
-                <h3 className="  mb-2 ">
+              <div className="mt-4 bg-[#e9e9e9]  p-3 py-6 md:p-6 text-[#555] text-xl  text-center font-meduim font-[1em]">
+                <h3 className="mb-2">
                   Motor Vehicle
                 </h3>
-                <p className="whitespace-pre-line">
-                  {report.motorVehicle?.replace(/\$/g, '\n')}
+                <p className={`whitespace-pre-line md:whitespace-normal text-base md:text-lg leading-6`}>
+                  {window.innerWidth < 768 ? report.motorVehicle?.replace(/\$/g, '\n') : report.motorVehicle?.replace(/\$/g, ' ')}
                 </p>
               </div>
               <div className="mt-4">
@@ -210,8 +210,8 @@ const ViewScannedReport = () => {
                         <span className="text-sm font-normal text-[#262626]">Length</span>
                       </td>
                       <td className="py-2 px-4 bg-[#f9f9f9]">
-                        <span className="text-[#262626] font-bold text-sm">{report.specifications?.dimensions?.length} 
-                        <span className="text-sm font-medium">  mm</span>
+                        <span className="text-[#262626] font-bold text-sm">{report.specifications?.dimensions?.length}
+                          <span className="text-sm font-medium">  mm</span>
                         </span>
                       </td>
                     </tr>
@@ -327,8 +327,8 @@ const ViewScannedReport = () => {
                         <span className="text-sm font-normal text-[#262626]">Displacement</span>
                       </td>
                       <td className="py-2 px-4 bg-[#f9f9f9]">
-                        <span className="text-[#262626] font-bold text-sm">{report?.specifications?.engine?.displacement}  
-                        <span className="text-sm font-medium">   cc</span>
+                        <span className="text-[#262626] font-bold text-sm">{report?.specifications?.engine?.displacement}
+                          <span className="text-sm font-medium">   cc</span>
                         </span>
                       </td>
                     </tr>
