@@ -2,21 +2,14 @@
 import { useParams } from "react-router-dom";
 import { useGetSingleReportQuery } from "../store/api/reportsApi";
 import logo from "../assets/logo.png"
+import ReportSkeleton from "../components/ReportSkeleton";
 const ViewScannedReport = () => {
   const { id } = useParams();
   const { data, isLoading, error } = useGetSingleReportQuery(id);
   const report = data?.data
 
-  if (isLoading) return (
-    <div className="min-h-screen flex items-center justify-center p-6">
-      <div className="relative flex flex-col items-center justify-center">
-        <div className="absolute w-24 h-24 rounded-full bg-blue-50 animate-pulse"></div>
-        <img src={logo} alt="Mutabiq" className="w-16 h-16 relative z-10 top-10" />
-        <div className="absolute w-24 h-24 border-4 border-blue-600 rounded-full border-t-transparent animate-spin"></div>
-        <p className="mt-14 text-blue-900 font-medium animate-pulse">Loading...</p>
-      </div>
-    </div>
-  );
+
+  if (isLoading) return <ReportSkeleton />;
   if (error)
     return <div className="p-6 text-red-600">Error loading report</div>;
   if (!report)
@@ -38,6 +31,8 @@ const ViewScannedReport = () => {
               src="logo.png"
               alt="Mutabiq"
               className="w-16 h-16 relative z-10"
+              loading="eager"
+              fetchPriority="high"
             />
           </div>
           <span className="text-xl font-light text-[#58595b] mb-5">
@@ -53,6 +48,12 @@ const ViewScannedReport = () => {
           {/* Vehicle Information Table */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 ">
             <div className="bg-white rounded-lg  p-4 py-6 md:p-6 md:col-span-2 shadow">
+              <div className="mb-4 text-[#155724] bg-[#d4edda] border border-[#c3e6cb] px-4 py-3 rounded relative flex items-center gap-2" role="alert">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-5 h-5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                </svg>
+                This certificate has been approved
+              </div>
               <table className="w-full border-collapse">
                 <tbody>
                   <tr className="border-b border-white">

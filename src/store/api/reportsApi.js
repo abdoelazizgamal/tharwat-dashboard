@@ -1,21 +1,9 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { baseApi } from './baseApi';
 
-export const reportsApi = createApi({
-  reducerPath: 'reportsApi',
-  baseQuery: fetchBaseQuery({
-    baseUrl: 'https://api.g-so.com/api/v1',
-    prepareHeaders: (headers) => {
-      const token = localStorage.getItem('token');
-      if (token) {
-        headers.set('Authorization', `Bearer ${token}`);
-      }
-      return headers;
-    },
-  }),
-  tagTypes: ['Reports'],
+export const reportsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getReports: builder.query({
-      query: () => '/report',
+      query: ({ page = 1, limit = 10 } = {}) => `/report?page=${page}&limit=${limit}`,
       providesTags: ['Reports'],
     }),
     getSingleReport: builder.query({
@@ -42,6 +30,7 @@ export const reportsApi = createApi({
       query: (id) => ({
         url: `/report/${id}`,
         method: 'DELETE',
+        body: id, // Ensure ID is sent if required, though typically irrelevant for DELETE if in URL
       }),
       invalidatesTags: ['Reports'],
     }),

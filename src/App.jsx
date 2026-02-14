@@ -1,4 +1,5 @@
 import { createBrowserRouter, RouterProvider, Navigate, redirect } from 'react-router-dom';
+import Cookies from 'js-cookie';
 import { useEffect } from 'react';
 import SignIn from './pages/SignIn';
 import Dashboard from './pages/Dashboard';
@@ -27,7 +28,7 @@ const router = createBrowserRouter([
       </>
     ),
     loader: () => {
-      const token = localStorage.getItem('token');
+      const token = Cookies.get('token');
       if (token) {
         return redirect('/');
       }

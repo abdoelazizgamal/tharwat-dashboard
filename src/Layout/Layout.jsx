@@ -13,13 +13,13 @@ const Layout = () => {
       <Sidebar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
 
       <div className={`transition-all duration-300 ${isSidebarOpen ? 'md:ml-72' : 'md:ml-0'}`}>
-        <Header 
+        <Header
           isSidebarOpen={isSidebarOpen}
           setIsSidebarOpen={setIsSidebarOpen}
           isProfileOpen={isProfileOpen}
           setIsProfileOpen={setIsProfileOpen}
         />
-  <Outlet/>
+        <Outlet />
       </div>
     </div>
   );

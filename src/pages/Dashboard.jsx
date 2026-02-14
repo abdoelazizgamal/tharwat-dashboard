@@ -1,10 +1,18 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ReportsTable from '../components/ReportsTable';
 import { useGetReportsQuery } from '../store/api/reportsApi';
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const { data, isLoading, error } = useGetReportsQuery();
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(10);
+  const { data, isFetching: isLoading, error } = useGetReportsQuery({ page, limit });
+
+  const handleLimitChange = (newLimit) => {
+    setLimit(Number(newLimit));
+    setPage(1); // Reset to first page
+  };
 
   return (
     <main className="p-6 md:p-10">
@@ -20,25 +28,27 @@ const Dashboard = () => {
             </button>
           </div>
 
-          {isLoading ? (
-            <div className=" flex items-center justify-center p-6">
-              <div className="relative flex flex-col items-center justify-center">
-                <div className="absolute w-24 h-24 rounded-full bg-blue-50 animate-pulse"></div>
-                <img src="/logo.png" alt="Mutabiq" className="w-16 h-16 relative z-10 top-10" />
-                <div className="absolute w-24 h-24 border-4 border-blue-600 rounded-full border-t-transparent animate-spin"></div>
-                <p className="mt-14 text-blue-900 font-medium animate-pulse">Loading...</p>
-              </div>
-            </div>
-          ) : error ? (
+          {error ? (
             <div className="text-center py-8 text-red-600">
               Error loading reports. Please try again later.
             </div>
-          ) : !data?.data?.length ? (
+          ) : !isLoading && !data?.data?.length ? (
             <div className="text-center py-8 text-gray-600">
               No reports found. Create your first report by clicking the "New Certificate" button.
             </div>
           ) : (
-            <ReportsTable reports={data.data} />
+            <ReportsTable
+              reports={data?.data || []}
+              isLoading={isLoading}
+              pagination={{
+                currentPage: data?.page || 1,
+                totalPages: data?.totalPages || 1,
+                totalReports: data?.total || 0,
+                onPageChange: setPage,
+                limit: limit,
+                onLimitChange: handleLimitChange
+              }}
+            />
           )}
         </div>
       </div>

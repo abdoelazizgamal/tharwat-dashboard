@@ -3,33 +3,31 @@ import { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { useDeleteReportMutation } from '../store/api/reportsApi';
 
-const ReportsTable = ({ reports }) => {
+const ReportsTable = ({ reports, isLoading, pagination }) => {
   const navigate = useNavigate();
-  const [currentPage, setCurrentPage] = useState(1);
+  // const [currentPage, setCurrentPage] = useState(1); // Removed local state
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [reportToDelete, setReportToDelete] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [deleteReport, { isLoading: isDeleting }] = useDeleteReportMutation();
-  const reportsPerPage = 10;
 
-  // Filter reports based on search query
+  // Filter reports based on search query (Client-side filtering on current page data)
   const filteredReports = reports?.filter(report =>
     report.certificateNumber.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  // Get current reports
-  const indexOfLastReport = currentPage * reportsPerPage;
-  const indexOfFirstReport = indexOfLastReport - reportsPerPage;
-  const currentReports = filteredReports?.slice(indexOfFirstReport, indexOfLastReport);
+  // Pagination props
+  const { currentPage, totalPages, totalReports, onPageChange, limit, onLimitChange } = pagination || {};
 
   // Reset to first page when search query changes
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
-    setCurrentPage(1);
+    // Note: Search is currently client-side only on the fetched page.
+    // Ideally, search should also be server-side.
   };
 
   // Change page
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  // const paginate = (pageNumber) => setCurrentPage(pageNumber); // Removed local pagination
 
   const handleDelete = async () => {
     try {
@@ -74,100 +72,174 @@ const ReportsTable = ({ reports }) => {
             </tr>
           </thead>
           <tbody className="divide-y divide-blue-100/20">
-            {currentReports?.map((report) => (
-              <tr key={report._id} className="hover:bg-blue-50/30 transition-colors">
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-blue-900">
-                  {report.certificateNumber}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-blue-800/70">
-                  {report.manufacturer}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-blue-800/70">
-                  {report.variantModel}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-blue-800/70">
-                  {new Date(report.approvedOn).toLocaleDateString()}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-right space-x-2">
-                  <button 
-                    onClick={() => navigate(`/report/${report._id}`)}
-                    className="inline-flex cursor-pointer items-center justify-center p-2 rounded-lg text-blue-600 hover:text-white hover:bg-blue-600 transition-all duration-200"
-                    title="View Report"
-                  >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                    </svg>
-                  </button>
-                  <button 
-                    onClick={() => navigate(`/edit-report/${report._id}`)}
-                    className="inline-flex cursor-pointer items-center justify-center p-2 rounded-lg text-emerald-600 hover:text-white hover:bg-emerald-600 transition-all duration-200"
-                    title="Edit Report"
-                  >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                    </svg>
-                  </button>
-                  <button 
-                    onClick={() => {
-                      setReportToDelete(report);
-                      setShowDeleteModal(true);
-                    }}
-                    className="inline-flex cursor-pointer items-center justify-center p-2 rounded-lg text-red-600 hover:text-white hover:bg-red-600 transition-all duration-200"
-                    title="Delete Report"
-                  >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                    </svg>
-                  </button>
-                </td>
-              </tr>
-            ))}
+            {isLoading ? (
+              // Skeleton Loading State
+              Array.from({ length: limit }).map((_, index) => (
+                <tr key={`skeleton-${index}`} className="animate-pulse">
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="h-4 bg-gray-200 rounded w-24"></div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="h-4 bg-gray-200 rounded w-32"></div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="h-4 bg-gray-200 rounded w-20"></div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="h-4 bg-gray-200 rounded w-24"></div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-right space-x-2 flex justify-end">
+                    <div className="h-8 w-8 bg-gray-200 rounded-lg"></div>
+                    <div className="h-8 w-8 bg-gray-200 rounded-lg"></div>
+                    <div className="h-8 w-8 bg-gray-200 rounded-lg"></div>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              filteredReports?.map((report) => (
+                <tr key={report._id} className="hover:bg-blue-50/30 transition-colors">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-blue-900">
+                    {report.certificateNumber}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-blue-800/70">
+                    {report.manufacturer}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-blue-800/70">
+                    {report.variantModel}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-blue-800/70">
+                    {new Date(report.approvedOn).toLocaleDateString()}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-right space-x-2">
+                    <button
+                      onClick={() => navigate(`/report/${report._id}`)}
+                      className="inline-flex cursor-pointer items-center justify-center p-2 rounded-lg text-blue-600 hover:text-white hover:bg-blue-600 transition-all duration-200"
+                      title="View Report"
+                    >
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                      </svg>
+                    </button>
+                    <button
+                      onClick={() => navigate(`/edit-report/${report._id}`)}
+                      className="inline-flex cursor-pointer items-center justify-center p-2 rounded-lg text-emerald-600 hover:text-white hover:bg-emerald-600 transition-all duration-200"
+                      title="Edit Report"
+                    >
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                      </svg>
+                    </button>
+                    <button
+                      onClick={() => {
+                        setReportToDelete(report);
+                        setShowDeleteModal(true);
+                      }}
+                      className="inline-flex cursor-pointer items-center justify-center p-2 rounded-lg text-red-600 hover:text-white hover:bg-red-600 transition-all duration-200"
+                      title="Delete Report"
+                    >
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                      </svg>
+                    </button>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>
-      
-      {/* Pagination */}
-      <div className="flex justify-between items-center mt-6">
-        <p className="text-sm text-blue-900/60">
-          Showing {currentReports?.length} of {filteredReports?.length} reports
-        </p>
-        <div className="flex items-center space-x-2">
-          <button
-            onClick={() => paginate(currentPage - 1)}
-            disabled={currentPage === 1}
-            className={`p-2 rounded-lg ${currentPage === 1 ? 'text-gray-400 cursor-not-allowed' : 'text-blue-600 hover:bg-blue-50 cursor-pointer'}`}
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-          
-          {Array.from({ length: Math.ceil((filteredReports?.length || 0) / reportsPerPage) }).map((_, index) => (
-            <button
-              key={index}
-              onClick={() => paginate(index + 1)}
-              className={`px-3 py-1 rounded-lg transition-colors cursor-pointer ${currentPage === index + 1 ? 'bg-blue-600 text-white' : 'text-blue-600 hover:bg-blue-50'}`}
-            >
-              {index + 1}
-            </button>
-          ))}
 
-          <button
-            onClick={() => paginate(currentPage + 1)}
-            disabled={currentPage === Math.ceil((filteredReports?.length || 0) / reportsPerPage)}
-            className={`p-2 rounded-lg ${currentPage === Math.ceil((filteredReports?.length || 0) / reportsPerPage) ? 'text-gray-400 cursor-not-allowed' : 'text-blue-600 hover:bg-blue-50 cursor-pointer'}`}
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
+      {/* Pagination */}
+      {pagination && !isLoading && (
+        <div className="flex flex-col sm:flex-row justify-between items-center mt-6 gap-4">
+          <div className="flex items-center gap-2 order-3 sm:order-1">
+            <span className="text-sm text-blue-900/60">Rows:</span>
+            <select
+              value={limit || 10}
+              onChange={(e) => onLimitChange?.(e.target.value)}
+              className="bg-white border border-blue-100 text-blue-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-1.5 outline-none cursor-pointer"
+            >
+              {[10, 20, 50, 100].map(val => (
+                <option key={val} value={val}>{val}</option>
+              ))}
+            </select>
+          </div>
+
+          <p className="text-sm text-blue-900/60 order-2">
+            Showing <span className="font-medium text-blue-900">{((currentPage - 1) * (limit || 10)) + 1}-{Math.min(currentPage * (limit || 10), totalReports)}</span> of <span className="font-medium text-blue-900">{totalReports}</span> reports
+          </p>
+          <div className="flex items-center space-x-1 order-1 sm:order-3">
+            <button
+              onClick={() => onPageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+              className={`p-2 rounded-lg border transition-all duration-200 ${currentPage === 1 ? 'border-gray-200 text-gray-300 cursor-not-allowed' : 'border-blue-100 text-blue-600 hover:bg-blue-50 hover:border-blue-200 cursor-pointer shadow-sm'}`}
+              aria-label="Previous Page"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+
+            {(() => {
+              const delta = 1;
+              const range = [];
+              const rangeWithDots = [];
+              let l;
+
+              for (let i = 1; i <= totalPages; i++) {
+                if (i === 1 || i === totalPages || (i >= currentPage - delta && i <= currentPage + delta)) {
+                  range.push(i);
+                }
+              }
+
+              for (let i of range) {
+                if (l) {
+                  if (i - l === 2) {
+                    rangeWithDots.push(l + 1);
+                  } else if (i - l !== 1) {
+                    rangeWithDots.push('...');
+                  }
+                }
+                rangeWithDots.push(i);
+                l = i;
+              }
+
+              return rangeWithDots.map((page, index) => (
+                page === '...' ? (
+                  <span key={`dots-${index}`} className="px-2 text-gray-400">...</span>
+                ) : (
+                  <button
+                    key={page}
+                    onClick={() => onPageChange(page)}
+                    className={`min-w-[32px] h-8 px-3 rounded-lg text-sm font-medium transition-all duration-200 cursor-pointer border ${currentPage === page
+                      ? 'bg-blue-600 text-white border-blue-600 shadow-md transform scale-105'
+                      : 'bg-white text-blue-600 border-blue-100 hover:bg-blue-50 hover:border-blue-200'
+                      }`}
+                  >
+                    {page}
+                  </button>
+                )
+              ));
+            })()}
+
+            <button
+              onClick={() => onPageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className={`p-2 rounded-lg border transition-all duration-200 ${currentPage === totalPages ? 'border-gray-200 text-gray-300 cursor-not-allowed' : 'border-blue-100 text-blue-600 hover:bg-blue-50 hover:border-blue-200 cursor-pointer shadow-sm'}`}
+              aria-label="Next Page"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Delete Confirmation Modal */}
       {showDeleteModal && (
-        <div 
+        <div
           onClick={(e) => {
             if (e.target === e.currentTarget) {
               setShowDeleteModal(false);

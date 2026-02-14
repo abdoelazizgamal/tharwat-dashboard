@@ -1,10 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { authApi } from '../api/authApi';
+import Cookies from 'js-cookie';
 
 const initialState = {
   user: JSON.parse(localStorage.getItem('user')) || null,
-  token: localStorage.getItem('token') || null,
-  isAuthenticated: !!localStorage.getItem('token')
+  token: Cookies.get('token') || null,
+  isAuthenticated: !!Cookies.get('token')
 };
 
 const authSlice = createSlice({
@@ -15,7 +16,7 @@ const authSlice = createSlice({
       state.user = null;
       state.token = null;
       state.isAuthenticated = false;
-      localStorage.removeItem('token');
+      Cookies.remove('token');
       localStorage.removeItem('user');
     }
   },
@@ -26,7 +27,7 @@ const authSlice = createSlice({
         state.user = payload.data;
         state.token = payload.data.accessToken;
         state.isAuthenticated = true;
-        localStorage.setItem('token', payload.data.accessToken);
+        Cookies.set('token', payload.data.accessToken, { expires: 7 }); // Expires in 7 days
         localStorage.setItem('user', JSON.stringify(payload.data));
       }
     );
